@@ -7,7 +7,7 @@ use TwoJays\NeonApiWrapper\NeonClient;
 
 class Accounts extends NeonClient
 {
-    private $endpoint = '/accounts';
+    protected string $endpoint = '/accounts';
 
     public function getAccounts(array $params): stdClass
     {

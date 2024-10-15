@@ -7,11 +7,11 @@ use stdClass;
 
 abstract class NeonClient
 {
-    protected $baseUrl = 'https://api.neoncrm.com/v2';
+    protected string $baseUrl = 'https://api.neoncrm.com/v2';
 
-    private $client;
-
-    protected $endpoint = '';
+    protected string $endpoint = '';
+    
+    private Client $client;
 
     public function __construct(
         public string $apiKey,
@@ -22,19 +22,23 @@ abstract class NeonClient
 
     protected function getRequest(string $endpoint, array $params): stdClass
     {
-        return $this->makeRequest($endpoint, 'GET', $params);
+        return $this->makeApiRequest($endpoint, 'GET', $params);
     }
 
-    protected function postRequest(): array
+    protected function postRequest(string $endpoint, array $params): stdClass
     {
-        return [];
+        return $this->makeApiRequest($endpoint, 'POST', $params);
     }
 
-    private function makeRequest(string $endpoint, string $type, array $params): mixed {
-        $response = $this->client->request($type, $this->baseUrl . $endpoint, [
+    private function makeApiRequest(string $endpoint, string $type, array $params): mixed {
+        $options = [
             'auth' => [$this->organizationId, $this->apiKey],
-            'query' => $params
-        ]);
+        ];
+
+        if(isset($params))
+            $options['query'] = $params;
+
+        $response = $this->client->request($type, $this->baseUrl . $endpoint, $options);
 
         // Add error handling
 
