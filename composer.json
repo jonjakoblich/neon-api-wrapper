@@ -1,6 +1,7 @@
 {
     "name": "jonjakoblich/neon-api-wrapper",
     "description": "A PHP wrapper for the Neon CRM API.",
+    "version": "0.0.1-dev",
     "type": "library",
     "require": {
         "guzzlehttp/guzzle": "^7.9"
