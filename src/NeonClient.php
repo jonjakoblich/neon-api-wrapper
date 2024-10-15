@@ -4,6 +4,7 @@ namespace TwoJays\NeonApiWrapper;
 
 use GuzzleHttp\Client;
 use stdClass;
+use TwoJays\NeonApiWrapper\Contracts\NeonApiResponse;
 
 abstract class NeonClient
 {
@@ -15,17 +16,18 @@ abstract class NeonClient
 
     public function __construct(
         public string $apiKey,
-        public string $organizationId
+        public string $organizationId,
+        public ?array $args = [],
     ) {
-        $this->client = new Client();
+        $this->client = new Client($args);
     }
 
-    protected function getRequest(string $endpoint, array $params): stdClass
+    protected function getRequest(string $endpoint, array $params): array
     {
         return $this->makeApiRequest($endpoint, 'GET', $params);
     }
 
-    protected function postRequest(string $endpoint, array $params): stdClass
+    protected function postRequest(string $endpoint, array $params): NeonApiResponse
     {
         return $this->makeApiRequest($endpoint, 'POST', $params);
     }
@@ -42,6 +44,6 @@ abstract class NeonClient
 
         // Add error handling
 
-        return json_decode($response->getBody()->getContents());
+        return json_decode($response->getBody()->getContents(), true);
     }
 }
