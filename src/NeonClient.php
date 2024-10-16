@@ -4,9 +4,8 @@ namespace TwoJays\NeonApiWrapper;
 
 use Exception;
 use GuzzleHttp\Client;
-use stdClass;
+use TwoJays\NeonApiWrapper\Contracts\GetRequest;
 use TwoJays\NeonApiWrapper\Contracts\NeonApiRequest;
-use TwoJays\NeonApiWrapper\Contracts\NeonApiResponse;
 
 abstract class NeonClient
 {
@@ -24,33 +23,23 @@ abstract class NeonClient
         $this->client = new Client($args);
     }
 
-    protected function makeRequest(string $endpoint, NeonApiRequest $request): mixed {
+    protected function makeRequest(NeonApiRequest $apiRequest, array $pathParams = []): mixed {
         $options = [
             'auth' => [$this->organizationId, $this->apiKey],
         ];
 
-        if($request::METHOD == 'GET')
-            $options['query'] = $this->getRequestProperties($request);
+        if($apiRequest instanceof GetRequest)
+            $options['query'] = $apiRequest->getQueryParams($apiRequest);
 
-        $response = $this->client->request($request::METHOD, $this->baseUrl . $endpoint, $options);
-
-        // Add error handling
+        $response = $this->client->request($apiRequest::METHOD, $this->baseUrl . $apiRequest->getEndpoint(), $options);
 
         if($response->getStatusCode() == 200) {
-            $responseClass = $request->successResponseType();
+            $responseClass = $apiRequest->successResponseType();
     
             return new $responseClass(...json_decode($response->getBody()->getContents(), true));
         } else {
             throw new Exception($response->getBody(),$response->getStatusCode());
         }
 
-    }
-
-    private function getRequestProperties(NeonApiRequest $request): array
-    {
-        return array_filter(
-            get_object_vars($request),
-            fn($property) => !empty($property)
-        );
     }
 }

@@ -6,5 +6,9 @@ interface NeonApiRequest
 {
     const METHOD = '';
 
+    const ENDPOINT_BASE = '';
+
+    public function getEndpoint(): string;
+
     public function successResponseType(): string;
 }

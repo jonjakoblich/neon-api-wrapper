@@ -8,10 +8,10 @@ use TwoJays\NeonApiWrapper\Responses\AccountsListResponse;
 
 class Accounts extends NeonClient
 {
-    protected string $endpoint = '/accounts';
+    // protected string $endpoint = '/accounts';
 
     public function listAccounts(ListAccountsRequest $request): AccountsListResponse
     {
-        return $this->makeRequest($this->endpoint, $request);
+        return $this->makeRequest($request);
     }
 }

@@ -2,13 +2,16 @@
 
 namespace TwoJays\NeonApiWrapper\Requests;
 
+use TwoJays\NeonApiWrapper\Concerns\AccountsEndpoint;
+use TwoJays\NeonApiWrapper\Concerns\HasQueryParams;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
-use TwoJays\NeonApiWrapper\Contracts\NeonApiResponse;
 use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
 use TwoJays\NeonApiWrapper\Responses\AccountsListResponse;
 
 class ListAccountsRequest implements GetRequest
 {
+    use AccountsEndpoint, HasQueryParams;
+
     /**
      * @todo Validate the input
      * - For instance, the property $userType should be one of the values
@@ -26,11 +29,5 @@ class ListAccountsRequest implements GetRequest
     public function successResponseType(): string
     {
         return AccountsListResponse::class;
-    }
-
-    public function successResponse(...$props): NeonApiResponse
-    {
-        $responseClass = $this->successResponseType();
-        return new $responseClass($props);
     }
 }
