@@ -2,8 +2,7 @@
 
 namespace TwoJays\NeonApiWrapper\Enums;
 
-enum AccountUserTypeEnum: string
-{
+enum AccountSearchResultItemUserTypeEnum: string {
     case INDIVIDUAL = 'INDIVIDUAL';
     case COMPANY = 'COMPANY';
 }

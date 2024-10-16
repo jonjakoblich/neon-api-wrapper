@@ -2,9 +2,8 @@
 
 namespace TwoJays\NeonApiWrapper\Responses;
 
-use stdClass;
 use TwoJays\NeonApiWrapper\Contracts\PaginatedResponse;
-use TwoJays\NeonApiWrapper\DataObjects\AccountData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
 
 class AccountsListResponse implements PaginatedResponse
 {
@@ -12,6 +11,6 @@ class AccountsListResponse implements PaginatedResponse
         public array $accounts,
         public readonly array $pagination,
     ){
-        $this->accounts = array_map(fn($account) => new AccountData(...$account), $this->accounts);
+        $this->accounts = array_map(fn($account) => new AccountSearchResultItemData(...$account), $this->accounts);
     }
 }
