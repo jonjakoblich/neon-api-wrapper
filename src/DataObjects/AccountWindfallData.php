@@ -22,7 +22,7 @@ class AccountWindfallData
         public bool $philanthropic_giver,
         public array $philanthropic_cause,
         public array $philanthropic_focus,
-        public bool $multi-property_owner,
+        public bool $multi_property_owner,
         public bool $foundation_association,
         public bool $foundation_officer,
         public bool $trust_association,
