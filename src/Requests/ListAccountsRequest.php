@@ -6,7 +6,7 @@ use TwoJays\NeonApiWrapper\Concerns\AccountsEndpoint;
 use TwoJays\NeonApiWrapper\Concerns\HasQueryParams;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
 use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
-use TwoJays\NeonApiWrapper\Responses\AccountsListResponse;
+use TwoJays\NeonApiWrapper\Responses\ListAccountsResponse;
 
 class ListAccountsRequest implements GetRequest
 {
@@ -28,6 +28,6 @@ class ListAccountsRequest implements GetRequest
 
     public function successResponseType(): string
     {
-        return AccountsListResponse::class;
+        return ListAccountsResponse::class;
     }
 }

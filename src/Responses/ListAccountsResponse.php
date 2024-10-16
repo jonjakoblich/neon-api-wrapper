@@ -6,7 +6,7 @@ use TwoJays\NeonApiWrapper\Contracts\PaginatedResponse;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
 use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
 
-class AccountsListResponse implements PaginatedResponse
+class ListAccountsResponse implements PaginatedResponse
 {
     public function __construct(
         public array $accounts,
