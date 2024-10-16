@@ -5,8 +5,6 @@ namespace TwoJays\NeonApiWrapper\Requests;
 use TwoJays\NeonApiWrapper\Concerns\AccountsEndpoint;
 use TwoJays\NeonApiWrapper\Concerns\HasQueryParams;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
-use TwoJays\NeonApiWrapper\DataObjects\CompanyAccountData;
-use TwoJays\NeonApiWrapper\DataObjects\IndividualAccountData;
 use TwoJays\NeonApiWrapper\Responses\GetAccountResponse;
 
 class GetAccountRequest implements GetRequest

@@ -15,6 +15,10 @@ class ListAccountsResponse implements PaginatedResponse
         /**
          * @todo use attribute or some way to convert each item in an
          * array to a particular object type
+         * [ArrayOf(AccountData::class)]
+         * This attribute will transform the property it is attributed to
+         * and return the transformed value with an array of objects of the
+         * specified class.
          */
         public array $accounts,
         public PaginationData $pagination,
