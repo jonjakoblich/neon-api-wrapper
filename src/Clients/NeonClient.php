@@ -1,6 +1,6 @@
 <?php
 
-namespace TwoJays\NeonApiWrapper;
+namespace TwoJays\NeonApiWrapper\Clients;
 
 use Exception;
 use GuzzleHttp\Client;
@@ -24,6 +24,8 @@ abstract class NeonClient
     }
 
     protected function makeRequest(NeonApiRequest $apiRequest, array $pathParams = []): mixed {
+        $this->endpoint = $this->baseUrl . $apiRequest->getEndpoint();
+        
         $options = [
             'auth' => [$this->organizationId, $this->apiKey],
         ];
@@ -31,15 +33,29 @@ abstract class NeonClient
         if($apiRequest instanceof GetRequest)
             $options['query'] = $apiRequest->getQueryParams($apiRequest);
 
-        $response = $this->client->request($apiRequest::METHOD, $this->baseUrl . $apiRequest->getEndpoint(), $options);
+
+        if(!empty($pathParams))
+            $this->parameterizeEndpoint($pathParams);
+
+        $response = $this->client->request($apiRequest::METHOD, $this->endpoint, $options);
 
         if($response->getStatusCode() == 200) {
             $responseClass = $apiRequest->successResponseType();
     
-            return new $responseClass(...json_decode($response->getBody()->getContents(), true));
+            return $responseClass::fromArray(json_decode($response->getBody()->getContents(), true));
         } else {
             throw new Exception($response->getBody(),$response->getStatusCode());
         }
 
+    }
+
+    /**
+     * Replace curly brace notation with key matched parameters
+     */
+    private function parameterizeEndpoint(array $pathParams): void
+    {
+        foreach ($pathParams as $key => $value) {
+            $this->endpoint = str_replace('{' . $key . '}', $value, $this->endpoint);
+        }
     }
 }
