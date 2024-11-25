@@ -68,3 +68,16 @@ it('gets a list of accounts', function () {
         ->data->accounts->each->toBeInstanceOf(AccountSearchResultItemData::class)
         ->data->pagination->toBeInstanceOf(PaginationData::class);
 });
+
+it('mocks the client', function () {
+    $request = new ListAccountsRequest(
+        userType:'INDIVIDUAL'
+    );
+
+    $client = Mockery::mock(AccountsClient::class);
+    $client->shouldReceive('listAccounts')
+        ->with($request);
+
+    dump($client->listAccounts($request));
+});
+
