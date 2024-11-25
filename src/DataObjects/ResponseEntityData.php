@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class ResponseEntityData
+use TwoJays\NeonApiWrapper\Data;
+
+class ResponseEntityData extends Data
 {
     public function __construct(
     ) {}

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class LoginData
+use TwoJays\NeonApiWrapper\Data;
+
+class LoginData extends Data
 {
     public function __construct(
         public string $username,

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class SoftCreditData
+use TwoJays\NeonApiWrapper\Data;
+
+class SoftCreditData extends Data
 {
     public function __construct(
         public string $id,

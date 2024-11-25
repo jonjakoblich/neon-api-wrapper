@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class InKindPaymentData
+use TwoJays\NeonApiWrapper\Data;
+
+class InKindPaymentData extends Data
 {
     public function __construct(
         public float $fairMarketValue,

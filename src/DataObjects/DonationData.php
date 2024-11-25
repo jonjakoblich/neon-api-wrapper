@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class DonationData
+use TwoJays\NeonApiWrapper\Data;
+
+class DonationData extends Data
 {
     public function __construct(
         public string $batchNumber,

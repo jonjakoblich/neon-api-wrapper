@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class AcknowledgeeData
+use TwoJays\NeonApiWrapper\Data;
+
+class AcknowledgeeData extends Data
 {
     public function __construct(
         public string $accountId,

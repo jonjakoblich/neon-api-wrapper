@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class GenerosityIndicatorData
+use TwoJays\NeonApiWrapper\Data;
+
+class GenerosityIndicatorData extends Data
 {
     public function __construct(
         public float $indicator,

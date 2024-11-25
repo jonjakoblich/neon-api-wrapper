@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class AdmissionFeeData
+use TwoJays\NeonApiWrapper\Data;
+
+class AdmissionFeeData extends Data
 {
     public function __construct(
         public float $fee,

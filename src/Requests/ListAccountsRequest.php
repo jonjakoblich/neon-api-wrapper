@@ -5,8 +5,8 @@ namespace TwoJays\NeonApiWrapper\Requests;
 use TwoJays\NeonApiWrapper\Concerns\AccountsEndpoint;
 use TwoJays\NeonApiWrapper\Concerns\HasQueryParams;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
+use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
-use TwoJays\NeonApiWrapper\Responses\ListAccountsResponse;
 
 class ListAccountsRequest implements GetRequest
 {
@@ -26,8 +26,8 @@ class ListAccountsRequest implements GetRequest
         public ?string $userType = AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value,
     ){}
 
-    public function successResponseType(): string
+    public function responseDataType(): string
     {
-        return ListAccountsResponse::class;
+        return AccountSearchResultData::class;
     }
 }

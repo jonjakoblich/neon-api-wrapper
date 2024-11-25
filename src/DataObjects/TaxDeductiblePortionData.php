@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class TaxDeductiblePortionData
+use TwoJays\NeonApiWrapper\Data;
+
+class TaxDeductiblePortionData extends Data
 {
     public function __construct(
         public IdNamePairData $fund,

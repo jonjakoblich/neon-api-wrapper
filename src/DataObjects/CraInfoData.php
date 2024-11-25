@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class CraInfoData
+use TwoJays\NeonApiWrapper\Data;
+
+class CraInfoData extends Data
 {
     public function __construct(
         public float $advantageAmount,

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class WebhookData
+use TwoJays\NeonApiWrapper\Data;
+
+class WebhookData extends Data
 {
     public function __construct(
         public string $id,

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class LocationData
+use TwoJays\NeonApiWrapper\Data;
+
+class LocationData extends Data
 {
     public function __construct(
         public string $name,

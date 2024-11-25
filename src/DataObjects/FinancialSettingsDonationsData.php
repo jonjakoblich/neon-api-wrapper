@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class FinancialSettingsDonationsData
+use TwoJays\NeonApiWrapper\Data;
+
+class FinancialSettingsDonationsData extends Data
 {
     public function __construct(
         public string $type,

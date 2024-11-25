@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class MembershipCalculateResultData
+use TwoJays\NeonApiWrapper\Data;
+
+class MembershipCalculateResultData extends Data
 {
     public function __construct(
         public float $subTotal,

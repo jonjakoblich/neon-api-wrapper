@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class PaginationEventRegistrationData
+use TwoJays\NeonApiWrapper\Data;
+
+class PaginationEventRegistrationData extends Data
 {
     public function __construct(
         public string $accountId,

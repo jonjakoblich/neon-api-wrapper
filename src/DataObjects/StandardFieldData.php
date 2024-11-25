@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class StandardFieldData
+use TwoJays\NeonApiWrapper\Data;
+
+class StandardFieldData extends Data
 {
     public function __construct(
         public string $fieldName,

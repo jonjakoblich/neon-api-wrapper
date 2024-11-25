@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class SearchRequestData
+use TwoJays\NeonApiWrapper\Data;
+
+class SearchRequestData extends Data
 {
     public function __construct(
         public array $searchFields,

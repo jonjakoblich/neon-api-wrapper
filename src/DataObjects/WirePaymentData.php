@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class WirePaymentData
+use TwoJays\NeonApiWrapper\Data;
+
+class WirePaymentData extends Data
 {
     public function __construct(
         public string $wireNumber,

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class AccountSearchResultItemData
+use TwoJays\NeonApiWrapper\Data;
+
+class AccountSearchResultItemData extends Data
 {
     public function __construct(
         public string $accountId,

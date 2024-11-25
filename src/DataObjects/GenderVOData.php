@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class GenderVOData
+use TwoJays\NeonApiWrapper\Data;
+
+class GenderVOData extends Data
 {
     public function __construct(
         public string $code,

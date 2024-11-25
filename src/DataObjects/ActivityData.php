@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class ActivityData
+use TwoJays\NeonApiWrapper\Data;
+
+class ActivityData extends Data
 {
     public function __construct(
         public string $id,

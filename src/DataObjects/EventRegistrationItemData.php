@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class EventRegistrationItemData
+use TwoJays\NeonApiWrapper\Data;
+
+class EventRegistrationItemData extends Data
 {
     public function __construct(
         public CraInfoData $craInfo,

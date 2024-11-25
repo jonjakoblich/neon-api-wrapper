@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class ActivityDatesData
+use TwoJays\NeonApiWrapper\Data;
+
+class ActivityDatesData extends Data
 {
     public function __construct(
         public string $startDate,

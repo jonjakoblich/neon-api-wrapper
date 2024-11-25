@@ -6,6 +6,8 @@ use Exception;
 use GuzzleHttp\Client;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
 use TwoJays\NeonApiWrapper\Contracts\NeonApiRequest;
+use TwoJays\NeonApiWrapper\Response;
+use TwoJays\NeonApiWrapper\TransformToResponse;
 
 abstract class NeonClient
 {
@@ -40,13 +42,17 @@ abstract class NeonClient
         $response = $this->client->request($apiRequest::METHOD, $this->endpoint, $options);
 
         if($response->getStatusCode() == 200) {
-            $responseClass = $apiRequest->successResponseType();
+            $responseClass = $apiRequest->responseDataType();
     
-            return $responseClass::fromArray(json_decode($response->getBody()->getContents(), true));
+            $transformData = new TransformToResponse($responseClass, json_decode($response->getBody()->getContents(), true));
+
+            return new Response(
+                $transformData(),
+                $apiRequest
+            );
         } else {
             throw new Exception($response->getBody(),$response->getStatusCode());
         }
-
     }
 
     /**

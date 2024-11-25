@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class ConsentData
+use TwoJays\NeonApiWrapper\Data;
+
+class ConsentData extends Data
 {
     public function __construct(
         public string $email,

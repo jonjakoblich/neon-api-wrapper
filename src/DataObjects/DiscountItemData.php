@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class DiscountItemData
+use TwoJays\NeonApiWrapper\Data;
+
+class DiscountItemData extends Data
 {
     public function __construct(
         public string $orderItemId,

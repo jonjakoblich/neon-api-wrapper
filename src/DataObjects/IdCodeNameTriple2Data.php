@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class IdCodeNameTriple2Data
+use TwoJays\NeonApiWrapper\Data;
+
+class IdCodeNameTriple2Data extends Data
 {
     public function __construct(
         public string $code,

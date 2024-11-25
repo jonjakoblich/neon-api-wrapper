@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class EventAttendeesData
+use TwoJays\NeonApiWrapper\Data;
+
+class EventAttendeesData extends Data
 {
     public function __construct(
         public PaginationData $pagination,

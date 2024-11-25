@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class CreditCardOfflinePaymentData
+use TwoJays\NeonApiWrapper\Data;
+
+class CreditCardOfflinePaymentData extends Data
 {
     public function __construct(
         public string $cardNumberLastFour,

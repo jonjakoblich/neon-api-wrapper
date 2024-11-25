@@ -5,7 +5,7 @@ namespace TwoJays\NeonApiWrapper\Requests;
 use TwoJays\NeonApiWrapper\Concerns\AccountsEndpoint;
 use TwoJays\NeonApiWrapper\Concerns\HasQueryParams;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
-use TwoJays\NeonApiWrapper\Responses\GetAccountResponse;
+use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 
 class GetAccountRequest implements GetRequest
 {
@@ -14,9 +14,9 @@ class GetAccountRequest implements GetRequest
     public function __construct(
     ){}
 
-    public function successResponseType(): string
+    public function responseDataType(): string
     {
-        return GetAccountResponse::class;
+        return AccountData::class;
     }
 
     public function getEndpoint(): string

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class OriginData
+use TwoJays\NeonApiWrapper\Data;
+
+class OriginData extends Data
 {
     public function __construct(
         public ?string $originDetail,

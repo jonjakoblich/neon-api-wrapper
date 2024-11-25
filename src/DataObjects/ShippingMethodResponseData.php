@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class ShippingMethodResponseData
+use TwoJays\NeonApiWrapper\Data;
+
+class ShippingMethodResponseData extends Data
 {
     public function __construct(
         public string $id,

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class ProductImageData
+use TwoJays\NeonApiWrapper\Data;
+
+class ProductImageData extends Data
 {
     public function __construct(
         public int $sequenceId,

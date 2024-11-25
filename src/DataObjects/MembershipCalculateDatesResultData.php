@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class MembershipCalculateDatesResultData
+use TwoJays\NeonApiWrapper\Data;
+
+class MembershipCalculateDatesResultData extends Data
 {
     public function __construct(
         public string $transactionDate,

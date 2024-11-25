@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class HttpBasicData
+use TwoJays\NeonApiWrapper\Data;
+
+class HttpBasicData extends Data
 {
     public function __construct(
         public string $userName,

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class OrderData
+use TwoJays\NeonApiWrapper\Data;
+
+class OrderData extends Data
 {
     public function __construct(
         public array $donations,

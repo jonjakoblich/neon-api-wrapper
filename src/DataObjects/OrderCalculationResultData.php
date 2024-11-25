@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class OrderCalculationResultData
+use TwoJays\NeonApiWrapper\Data;
+
+class OrderCalculationResultData extends Data
 {
     public function __construct(
         public float $totalCharge,

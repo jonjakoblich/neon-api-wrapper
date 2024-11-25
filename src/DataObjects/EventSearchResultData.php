@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class EventSearchResultData
+use TwoJays\NeonApiWrapper\Data;
+
+class EventSearchResultData extends Data
 {
     public function __construct(
         public array $events,

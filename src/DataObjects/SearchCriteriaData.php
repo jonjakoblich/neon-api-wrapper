@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class SearchCriteriaData
+use TwoJays\NeonApiWrapper\Data;
+
+class SearchCriteriaData extends Data
 {
     public function __construct(
         public string $field,

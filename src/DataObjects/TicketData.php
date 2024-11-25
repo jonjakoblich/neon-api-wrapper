@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class TicketData
+use TwoJays\NeonApiWrapper\Data;
+
+class TicketData extends Data
 {
     public function __construct(
         public int $ticketId,

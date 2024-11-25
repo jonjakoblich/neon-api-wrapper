@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class CodeNamePairData
+use TwoJays\NeonApiWrapper\Data;
+
+class CodeNamePairData extends Data
 {
     public function __construct(
         public string $code,

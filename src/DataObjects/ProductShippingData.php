@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class ProductShippingData
+use TwoJays\NeonApiWrapper\Data;
+
+class ProductShippingData extends Data
 {
     public function __construct(
         public bool $shippingRequired,

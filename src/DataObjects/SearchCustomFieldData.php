@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class SearchCustomFieldData
+use TwoJays\NeonApiWrapper\Data;
+
+class SearchCustomFieldData extends Data
 {
     public function __construct(
         public string $displayName,

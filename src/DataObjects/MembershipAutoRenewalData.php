@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class MembershipAutoRenewalData
+use TwoJays\NeonApiWrapper\Data;
+
+class MembershipAutoRenewalData extends Data
 {
     public function __construct(
         public string $membershipId,

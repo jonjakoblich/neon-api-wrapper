@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class TaxDeducibleInfoData
+use TwoJays\NeonApiWrapper\Data;
+
+class TaxDeducibleInfoData extends Data
 {
     public function __construct(
         public float $nonDeductibleAmount,

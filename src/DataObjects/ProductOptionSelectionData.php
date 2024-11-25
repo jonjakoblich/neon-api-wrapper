@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class ProductOptionSelectionData
+use TwoJays\NeonApiWrapper\Data;
+
+class ProductOptionSelectionData extends Data
 {
     public function __construct(
         public string $optionId,

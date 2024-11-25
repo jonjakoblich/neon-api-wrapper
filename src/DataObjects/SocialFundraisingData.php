@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class SocialFundraisingData
+use TwoJays\NeonApiWrapper\Data;
+
+class SocialFundraisingData extends Data
 {
     public function __construct(
         public bool $enabled,

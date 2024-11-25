@@ -10,5 +10,5 @@ interface NeonApiRequest
 
     public function getEndpoint(): string;
 
-    public function successResponseType(): string;
+    public function responseDataType(): string;
 }

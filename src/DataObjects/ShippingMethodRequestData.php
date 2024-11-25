@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class ShippingMethodRequestData
+use TwoJays\NeonApiWrapper\Data;
+
+class ShippingMethodRequestData extends Data
 {
     public function __construct(
         public string $countryId,

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class CampaignStatsData
+use TwoJays\NeonApiWrapper\Data;
+
+class CampaignStatsData extends Data
 {
     public function __construct(
         public int $donationCount,

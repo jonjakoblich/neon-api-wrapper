@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class PaginationData
+use TwoJays\NeonApiWrapper\Data;
+
+class PaginationData extends Data
 {
     public function __construct(
         public int $currentPage,

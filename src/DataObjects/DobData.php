@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class DobData
+use TwoJays\NeonApiWrapper\Data;
+
+class DobData extends Data
 {
     public function __construct(
         public string $day,

@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class MembershipResponseData
+use TwoJays\NeonApiWrapper\Data;
+
+class MembershipResponseData extends Data
 {
     public function __construct(
         public string $id,

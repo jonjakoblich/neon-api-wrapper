@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class CategoryData
+use TwoJays\NeonApiWrapper\Data;
+
+class CategoryData extends Data
 {
     public function __construct(
         public string $code,

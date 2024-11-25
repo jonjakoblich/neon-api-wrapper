@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class PledgePaymentResponseData
+use TwoJays\NeonApiWrapper\Data;
+
+class PledgePaymentResponseData extends Data
 {
     public function __construct(
         public string $pledgePaymentId,

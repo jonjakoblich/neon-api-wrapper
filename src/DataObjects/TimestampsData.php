@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class TimestampsData
+use TwoJays\NeonApiWrapper\Data;
+
+class TimestampsData extends Data
 {
     public function __construct(
         public string $createdBy,

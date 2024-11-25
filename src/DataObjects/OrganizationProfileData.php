@@ -2,7 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-class OrganizationProfileData
+use TwoJays\NeonApiWrapper\Data;
+
+class OrganizationProfileData extends Data
 {
     public function __construct(
         public string $name,
