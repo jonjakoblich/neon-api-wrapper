@@ -3,8 +3,11 @@
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
-use TwoJays\NeonApiWrapper\Endpoints\Accounts;
-use TwoJays\NeonApiWrapper\Responses\AccountsListResponse;
+use TwoJays\NeonApiWrapper\Clients\AccountsClient;
+use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
+use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
+use TwoJays\NeonApiWrapper\Requests\ListAccountsRequest;
+use TwoJays\NeonApiWrapper\Response as NeonApiWrapperResponse;
 
 uses()->group('endpoints','accounts');
 
@@ -13,14 +16,37 @@ uses()->group('endpoints','accounts');
  * @todo Create a set of error responses and test those
  * @todo Create a 200 response with accounts
  * @todo Create a 200 response without accounts
+ * @todo Create a query for individual accounts
+ * @todo Create a query for company accounts
  */
 
 it('gets a list of accounts', function () {
-
     $headers = [];
     $body = json_encode(new class{
-        public $accounts = [];
-        public $pagination = [];
+        public array $accounts;
+        public array $pagination;
+
+        public function __construct(){
+            $this->accounts = [
+                [
+                    "accountId" => (string) fake()->randomNumber(),
+                    "firstName" => fake()->firstName(),
+                    "lastName" => fake()->lastName(),
+                    "companyName" => fake()->company(),
+                    "email" => fake()->email(),
+                    "userType" => "INDIVIDUAL",
+                ]
+            ];
+            
+            $this->pagination = [
+                "currentPage" => 2,
+                "pageSize" => 10,
+                "sortColumn" => null,
+                "sortDirection" => null,
+                "totalPages" => 82,
+                "totalResults" => 812,
+            ];
+        }
     });
     
     $mock = new MockHandler([
@@ -29,14 +55,16 @@ it('gets a list of accounts', function () {
 
     $handlerStack = HandlerStack::create($mock);
 
-    $client = new Accounts('abc123','myOrgKey',['handler' => $handlerStack]);
+    $client = new AccountsClient('abc123','myOrgKey',['handler' => $handlerStack]);
 
-
-    $response = $client->getAccounts([
-        'userType' => 'INDIVIDUAL'
-    ]);
+    $response = $client->listAccounts(new ListAccountsRequest(
+        userType:'INDIVIDUAL'
+    ));
 
     expect($response)
-        ->toBeInstanceOf(AccountsListResponse::class)
-        ->toHaveProperties(['accounts','pagination']);
+        ->toBeInstanceOf(NeonApiWrapperResponse::class)
+        ->data->toHaveProperties(['accounts','pagination'])
+        ->data->accounts->toBeArray()
+        ->data->accounts->each->toBeInstanceOf(AccountSearchResultItemData::class)
+        ->data->pagination->toBeInstanceOf(PaginationData::class);
 });

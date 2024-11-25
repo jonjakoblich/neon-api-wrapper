@@ -41,18 +41,17 @@ abstract class NeonClient
 
         $response = $this->client->request($apiRequest::METHOD, $this->endpoint, $options);
 
-        if($response->getStatusCode() == 200) {
-            $responseClass = $apiRequest->responseDataType();
-    
-            $transformData = new TransformToResponse($responseClass, json_decode($response->getBody()->getContents(), true));
-
-            return new Response(
-                $transformData(),
-                $apiRequest
-            );
-        } else {
+        if($response->getStatusCode() != 200)
             throw new Exception($response->getBody(),$response->getStatusCode());
-        }
+
+        $responseClass = $apiRequest->responseDataType();
+
+        $transformData = new TransformToResponse($responseClass, json_decode($response->getBody()->getContents(), true));
+
+        return new Response(
+            $transformData(),
+            $apiRequest
+        );
     }
 
     /**
