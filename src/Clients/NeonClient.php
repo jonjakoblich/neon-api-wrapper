@@ -48,10 +48,7 @@ abstract class NeonClient
 
         $transformData = new TransformToResponse($responseClass, json_decode($response->getBody()->getContents(), true));
 
-        return new Response(
-            $transformData(),
-            $apiRequest
-        );
+        return $transformData();
     }
 
     /**
