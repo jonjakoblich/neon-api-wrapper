@@ -5,7 +5,7 @@ namespace TwoJays\NeonApiWrapper;
 use ReflectionClass;
 use ReflectionParameter;
 
-class TransformToResponse
+class TransformDataObjectProperties
 {
     public function __construct(
         public readonly string $className,
@@ -14,10 +14,10 @@ class TransformToResponse
 
     public function __invoke()
     {        
-        return $this->instantiateObject($this->className, $this->data);
+        return $this->instantiateDataObject($this->className, $this->data);
     }
 
-    private function instantiateObject(string $className, array $data)
+    private function instantiateDataObject(string $className, array $data)
     {
         $reflectionClass = new ReflectionClass($className);
         $constructor = $reflectionClass->getConstructor();
@@ -35,7 +35,7 @@ class TransformToResponse
         
                 if ($paramType && !$paramType->isBuiltin()) {
                     $paramClassName = $paramType->getName();
-                    $args[] = self::instantiateObject($paramClassName, $paramData);
+                    $args[] = self::instantiateDataObject($paramClassName, $paramData);
                 } else {
                     $args[] = $paramData;
                 }

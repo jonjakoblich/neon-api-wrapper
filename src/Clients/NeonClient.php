@@ -4,9 +4,10 @@ namespace TwoJays\NeonApiWrapper\Clients;
 
 use Exception;
 use GuzzleHttp\Client;
+use TwoJays\NeonApiWrapper\Contracts\DataObject;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
 use TwoJays\NeonApiWrapper\Contracts\NeonApiRequest;
-use TwoJays\NeonApiWrapper\TransformToResponse;
+use TwoJays\NeonApiWrapper\TransformDataObjectProperties;
 
 abstract class NeonClient
 {
@@ -24,7 +25,7 @@ abstract class NeonClient
         $this->client = new Client($args);
     }
 
-    protected function makeRequest(NeonApiRequest $apiRequest, array $pathParams = []): mixed
+    protected function makeRequest(NeonApiRequest $apiRequest, array $pathParams = []): DataObject
     {
         $this->endpoint = $this->baseUrl . $apiRequest->getEndpoint();
         
@@ -35,20 +36,22 @@ abstract class NeonClient
         if($apiRequest instanceof GetRequest)
             $options['query'] = $apiRequest->getQueryParams($apiRequest);
 
-
         if(!empty($pathParams))
             $this->parameterizeEndpoint($pathParams);
 
         $response = $this->client->request($apiRequest::METHOD, $this->endpoint, $options);
+        
+        $responseBodyContents = json_decode($response->getBody()->getContents(), true);
 
         if($response->getStatusCode() != 200)
-            throw new Exception($response->getBody(),$response->getStatusCode());
+            throw new Exception($responseBodyContents,$response->getStatusCode());
 
-        $responseClass = $apiRequest->responseDataType();
+        $intantiateDataObject = new TransformDataObjectProperties(
+            $apiRequest->responseDataType(), 
+            $responseBodyContents
+        );
 
-        $transformData = new TransformToResponse($responseClass, json_decode($response->getBody()->getContents(), true));
-
-        return $transformData();
+        return $intantiateDataObject();
     }
 
     /**

@@ -4,7 +4,7 @@ namespace TwoJays\NeonApiWrapper\Attributes;
 
 use Attribute;
 use TwoJays\NeonApiWrapper\Contracts\PropertyTransformer;
-use TwoJays\NeonApiWrapper\TransformToResponse;
+use TwoJays\NeonApiWrapper\TransformDataObjectProperties;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
 class ArrayOf implements PropertyTransformer
@@ -16,8 +16,8 @@ class ArrayOf implements PropertyTransformer
     public function transform(mixed $data): mixed
     {
         return array_map(function(array $classParams){
-            $transformData = new TransformToResponse($this->className, $classParams);
-            return $transformData();
+            $instantiateDataObject = new TransformDataObjectProperties($this->className, $classParams);
+            return $instantiateDataObject();
         }, $data);
     }
 }
