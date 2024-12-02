@@ -6,7 +6,6 @@ use Exception;
 use GuzzleHttp\Client;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
 use TwoJays\NeonApiWrapper\Contracts\NeonApiRequest;
-use TwoJays\NeonApiWrapper\Response;
 use TwoJays\NeonApiWrapper\TransformToResponse;
 
 abstract class NeonClient
@@ -25,7 +24,8 @@ abstract class NeonClient
         $this->client = new Client($args);
     }
 
-    protected function makeRequest(NeonApiRequest $apiRequest, array $pathParams = []): mixed {
+    protected function makeRequest(NeonApiRequest $apiRequest, array $pathParams = []): mixed
+    {
         $this->endpoint = $this->baseUrl . $apiRequest->getEndpoint();
         
         $options = [
@@ -59,5 +59,18 @@ abstract class NeonClient
         foreach ($pathParams as $key => $value) {
             $this->endpoint = str_replace('{' . $key . '}', $value, $this->endpoint);
         }
+    }
+
+    protected function prepareRequestParameters(array $required, array $optional): array
+    {
+        $params = $required;
+
+        foreach ($optional as $key => $value) {
+            if ($value !== null) {
+                $params[$key] = $value;
+            }
+        }
+
+        return $params;
     }
 }
