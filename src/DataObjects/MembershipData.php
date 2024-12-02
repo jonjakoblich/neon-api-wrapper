@@ -2,14 +2,13 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
-use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Data;
 
 class MembershipData extends Data
 {
     public function __construct(
         public string $id,
-        public string $parentId,
+        public ?string $parentId,
         public string $accountId,
         public IdNamePairData $membershipLevel,
         public IdNamePairData $membershipTerm,
