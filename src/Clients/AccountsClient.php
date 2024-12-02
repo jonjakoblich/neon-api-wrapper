@@ -3,10 +3,14 @@
 namespace TwoJays\NeonApiWrapper\Clients;
 
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\Enums\PaginationSortDirectionEnum;
+use TwoJays\NeonApiWrapper\Requests\GetAccountDonationsRequest;
 use TwoJays\NeonApiWrapper\Requests\GetAccountMembershipsRequest;
+use TwoJays\NeonApiWrapper\Requests\GetAccountPledgesRequest;
 use TwoJays\NeonApiWrapper\Requests\GetAccountRequest;
 use TwoJays\NeonApiWrapper\Requests\ListAccountsRequest;
 
@@ -30,11 +34,7 @@ class AccountsClient extends NeonClient
             'id' => $accountId,
         ]);
     }
-
-    /**
-     * Future methods
-     */
-
+    
     public function listAccountContacts()
     {
 
@@ -45,9 +45,21 @@ class AccountsClient extends NeonClient
     
     }
 
-    public function getAccountDonations()
+    public function getAccountDonations(
+        string $accountId, 
+        ?int $currentPage = 0, 
+        ?string $sortColumn = 'date', 
+        ?string $sortDirection = PaginationSortDirectionEnum::DESC->value
+    ): AccountDonationSearchResultData 
     {
+        $params = $this->prepareRequestParameters(
+            [
+                'id' => $accountId,
+            ],
+            compact('currentPage','sortColumn','sortDirection')
+        );
 
+        return $this->makeRequest(new GetAccountDonationsRequest(), $params);
     }
 
     public function getAccountEventRegistrations()
@@ -78,8 +90,20 @@ class AccountsClient extends NeonClient
 
     }
 
-    public function getAccountPledges()
+    public function getAccountPledges(
+        string $accountId, 
+        ?int $currentPage = 0, 
+        ?string $sortColumn = 'date', 
+        ?string $sortDirection = PaginationSortDirectionEnum::DESC->value
+    ): AccountPledgeSearchResultData
     {
+        $params = $this->prepareRequestParameters(
+            [
+                'id' => $accountId,
+            ],
+            compact('currentPage','sortColumn','sortDirection')
+        );
 
+        return $this->makeRequest(new GetAccountPledgesRequest(), $params);
     }
 }

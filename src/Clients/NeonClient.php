@@ -43,6 +43,9 @@ abstract class NeonClient
         
         $responseBodyContents = json_decode($response->getBody()->getContents(), true);
 
+        //dump($responseBodyContents);
+        //die();
+
         if($response->getStatusCode() != 200)
             throw new Exception($responseBodyContents,$response->getStatusCode());
 

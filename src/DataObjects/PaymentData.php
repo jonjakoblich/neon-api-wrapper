@@ -13,11 +13,11 @@ class PaymentData extends Data
         public string $note,
         public int $tenderType,
         public string $receivedDate,
-        public CreditCardOnlinePaymentData $creditCardOnline,
-        public CreditCardOfflinePaymentData $creditCardOffline,
-        public ECheckPaymentData $ach,
-        public CheckPaymentData $check,
-        public WirePaymentData $wire,
-        public InKindPaymentData $inKind
+        public ?CreditCardOnlinePaymentData $creditCardOnline,
+        public ?CreditCardOfflinePaymentData $creditCardOffline,
+        public ?ECheckPaymentData $ach,
+        public ?CheckPaymentData $check,
+        public ?WirePaymentData $wire,
+        public ?InKindPaymentData $inKind
     ) {}
 }
