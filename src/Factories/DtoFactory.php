@@ -5,6 +5,7 @@ namespace TwoJays\NeonApiWrapper\Factories;
 use ReflectionClass;
 use ReflectionParameter;
 use TwoJays\NeonApiWrapper\Contracts\DataObject;
+use TwoJays\NeonApiWrapper\Contracts\PropertyTransformer;
 use TwoJays\NeonApiWrapper\Exceptions\InvalidReturnTypeException;
 
 class DtoFactory
@@ -57,7 +58,8 @@ class DtoFactory
         $transformedData = null;
 
         foreach($parameter->getAttributes() as $attribute) {
-            $transformedData = $attribute->newInstance()->transform($data);
+            if($attribute instanceof PropertyTransformer)
+                $transformedData = $attribute->newInstance()->transform($data);
         }
 
         return $transformedData;
