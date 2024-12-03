@@ -1,23 +1,23 @@
 <?php
 
-namespace TwoJays\NeonApiWrapper;
+namespace TwoJays\NeonApiWrapper\Factories;
 
 use ReflectionClass;
 use ReflectionParameter;
+use TwoJays\NeonApiWrapper\Contracts\DataObject;
+use TwoJays\NeonApiWrapper\Exceptions\InvalidReturnTypeException;
 
-class TransformDataObjectProperties
+class DtoFactory
 {
-    public function __construct(
-        public readonly string $className,
-        public readonly array $data,
-    ){}
+    public static function create(array $response, string $returnType): DataObject
+    {
+        if(!is_subclass_of($returnType, DataObject::class))
+            throw new InvalidReturnTypeException;
 
-    public function __invoke()
-    {        
-        return $this->instantiateDataObject($this->className, $this->data);
+        return self::instantiateDataObject($returnType, $response);
     }
 
-    private function instantiateDataObject(string $className, array $data)
+    private static function instantiateDataObject(string $className, array $data)
     {
         $reflectionClass = new ReflectionClass($className);
         $constructor = $reflectionClass->getConstructor();
@@ -31,7 +31,7 @@ class TransformDataObjectProperties
                 $paramType = $parameter->getType();
                 
                 /** @todo handle parameter attributes */
-                $paramData = $this->processAttributes($parameter, $data[$paramName]);
+                $paramData = self::processAttributes($parameter, $data[$paramName]);
         
                 if ($paramType && !$paramType->isBuiltin()) {
                     $paramClassName = $paramType->getName();
@@ -49,7 +49,7 @@ class TransformDataObjectProperties
         return $reflectionClass->newInstanceArgs($args);
     }
 
-    private function processAttributes(ReflectionParameter $parameter, mixed $data): mixed
+    private static function processAttributes(ReflectionParameter $parameter, mixed $data): mixed
     {
         if(empty($parameter->getAttributes()))
             return $data;

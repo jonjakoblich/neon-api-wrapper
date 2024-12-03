@@ -2,6 +2,8 @@
 
 namespace TwoJays\NeonApiWrapper\Contracts;
 
+use GuzzleHttp\ClientInterface;
+
 interface NeonApiRequest
 {
     const METHOD = '';
@@ -10,5 +12,5 @@ interface NeonApiRequest
 
     public function getEndpoint(): string;
 
-    public function responseDataType(): string;
+    public function execute(ClientInterface $client): array;
 }

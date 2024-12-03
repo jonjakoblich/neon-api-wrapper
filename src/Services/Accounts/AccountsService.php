@@ -1,6 +1,6 @@
 <?php
 
-namespace TwoJays\NeonApiWrapper\Clients;
+namespace TwoJays\NeonApiWrapper\Services\Accounts;
 
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
@@ -8,11 +8,12 @@ use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\Enums\PaginationSortDirectionEnum;
-use TwoJays\NeonApiWrapper\Requests\GetAccountDonationsRequest;
-use TwoJays\NeonApiWrapper\Requests\GetAccountMembershipsRequest;
-use TwoJays\NeonApiWrapper\Requests\GetAccountPledgesRequest;
-use TwoJays\NeonApiWrapper\Requests\GetAccountRequest;
-use TwoJays\NeonApiWrapper\Requests\ListAccountsRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountDonationsRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountMembershipsRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountPledgesRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\ListAccountsRequest;
+use TwoJays\NeonApiWrapper\Services\BaseService;
 
 /**
  * I decided to make separate clients for each main endpoint. 
@@ -21,18 +22,26 @@ use TwoJays\NeonApiWrapper\Requests\ListAccountsRequest;
  * will require a full request object and sometimes it won't. Either way, it will be typed.
  */
 
-class AccountsClient extends NeonClient
+class AccountsService extends BaseService
 {
+    public function registerRequests()
+    {
+        // register endpoints and requests   
+    }
+    
     public function listAccounts(ListAccountsRequest $request): AccountSearchResultData
     {
         return $this->makeRequest($request);
+
+        // return $request->execute();
     }
 
     public function getAccount(string $accountId): AccountData
-    {
-        return $this->makeRequest(new GetAccountRequest(), [
-            'id' => $accountId,
-        ]);
+    {        
+        return $this->getResponse(
+            new GetAccountRequest(id: $accountId),
+            AccountData::class
+        );
     }
     
     public function listAccountContacts()

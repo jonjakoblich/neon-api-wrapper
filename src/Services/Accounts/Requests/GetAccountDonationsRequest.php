@@ -1,15 +1,16 @@
 <?php
 
-namespace TwoJays\NeonApiWrapper\Requests;
+namespace TwoJays\NeonApiWrapper\Services\Accounts\Requests;
 
 use TwoJays\NeonApiWrapper\Concerns\AccountsEndpoint;
+use TwoJays\NeonApiWrapper\Concerns\ExecutesRequests;
 use TwoJays\NeonApiWrapper\Concerns\HasQueryParams;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
 
 class GetAccountDonationsRequest implements GetRequest
 {
-    use AccountsEndpoint, HasQueryParams;
+    use AccountsEndpoint, ExecutesRequests, HasQueryParams;
 
     public function __construct(
     ){}

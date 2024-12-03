@@ -2,7 +2,7 @@
 
 namespace TwoJays\NeonApiWrapper\Contracts;
 
-interface NeonApiResponse
+interface ServiceProvider
 {
     
 }

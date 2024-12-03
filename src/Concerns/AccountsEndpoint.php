@@ -6,5 +6,5 @@ trait AccountsEndpoint
 {
     use HasEndpoint;
 
-    const ENDPOINT_BASE = '/accounts';
+    const ENDPOINT_BASE = 'accounts';
 }
