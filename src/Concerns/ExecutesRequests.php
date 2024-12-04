@@ -2,10 +2,10 @@
 
 namespace TwoJays\NeonApiWrapper\Concerns;
 
-use Exception;
 use GuzzleHttp\ClientInterface;
 use TwoJays\NeonApiWrapper\Contracts\WithPathParams;
 use TwoJays\NeonApiWrapper\Contracts\WithQueryParams;
+use TwoJays\NeonApiWrapper\Exceptions;
 
 trait ExecutesRequests
 {
@@ -19,12 +19,19 @@ trait ExecutesRequests
         if($this instanceof WithPathParams)
             $this->parameterizeEndpoint();
 
-        $response = $client->request($this::METHOD, $this->getEndpoint(), $options);
+        try {
+            $response = $client->request($this::METHOD, $this->getEndpoint(), $options);
+        } catch (\Throwable $th) {
+            $exception = match ($th->getCode()) {
+                401 => Exceptions\UnauthorizedException::class,
+                403 => Exceptions\ForbiddenException::class,
+                404 => Exceptions\NotFoundException::class,
+            };
+
+            throw new $exception;
+        }
 
         $responseBodyContents = json_decode($response->getBody()->getContents(), true);
-
-        if($response->getStatusCode() != 200)
-            throw new Exception($responseBodyContents,$response->getStatusCode());
 
         return $responseBodyContents;
     }

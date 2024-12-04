@@ -9,6 +9,9 @@ use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
 use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
 use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
+use TwoJays\NeonApiWrapper\Exceptions\ForbiddenException;
+use TwoJays\NeonApiWrapper\Exceptions\NotFoundException;
+use TwoJays\NeonApiWrapper\Exceptions\UnauthorizedException;
 use TwoJays\NeonApiWrapper\Services\Accounts\AccountsService;
 
 uses()->group('services');
@@ -60,4 +63,30 @@ it('can list accounts', function () {
     expect($response->pagination)
         ->toBeInstanceOf(PaginationData::class)
         ->toMatchObject($responseContent['pagination']);
+});
+
+describe('error response handling', function() {
+    it('handles 401 response', function () {
+        $this->mockHandler->append(new Response(401, [], Utils::streamFor(json_encode([]))));
+        
+        expect(fn() => $this->service->listAccounts(
+            userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
+        ))->toThrow(UnauthorizedException::class, 'Unauthorized access to API');
+    });
+    
+    it('handles 403 response', function () {
+        $this->mockHandler->append(new Response(403, [], Utils::streamFor(json_encode([]))));
+        
+        expect(fn() => $this->service->listAccounts(
+            userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
+        ))->toThrow(ForbiddenException::class, 'Forbidden');
+    });
+    
+    it('handles 404 response', function () {
+        $this->mockHandler->append(new Response(404, [], Utils::streamFor(json_encode([]))));
+        
+        expect(fn() => $this->service->listAccounts(
+            userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
+        ))->toThrow(NotFoundException::class, 'The requested URL could not be found');
+    });
 });
