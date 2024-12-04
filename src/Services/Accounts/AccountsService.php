@@ -18,8 +18,7 @@ use TwoJays\NeonApiWrapper\Services\BaseService;
 /**
  * I decided to make separate clients for each main endpoint. 
  * 
- * Client classes have distinct methods to perform an action. Sometimes the method signature
- * will require a full request object and sometimes it won't. Either way, it will be typed.
+ * Client classes have distinct methods to perform an action.
  */
 
 class AccountsService extends BaseService
