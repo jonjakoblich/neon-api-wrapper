@@ -10,8 +10,7 @@
         "pestphp/pest": "^3.4",
         "phpstan/phpstan": "^1.12",
         "symfony/var-dumper": "^3.4",
-        "fakerphp/faker": "^1.24",
-        "mockery/mockery": "^1.6"
+        "fakerphp/faker": "^1.24"
     },
     "autoload": {
         "psr-4": {

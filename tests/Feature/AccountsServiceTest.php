@@ -65,6 +65,21 @@ it('can list accounts', function () {
         ->toMatchObject($responseContent['pagination']);
 });
 
+
+it('can get a single account', function () {
+    $responseContent = [
+        'individualAccount' => [],
+        'companyAccounts' => []
+    ];
+
+    $this->mockHandler->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->getAccount('100');
+
+    // Assertions
+})->todo();
+
+
 describe('error response handling', function() {
     it('handles 401 response', function () {
         $this->mockHandler->append(new Response(401, [], Utils::streamFor(json_encode([]))));
