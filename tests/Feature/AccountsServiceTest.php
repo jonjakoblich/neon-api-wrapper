@@ -1,0 +1,63 @@
+<?php
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Utils;
+use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
+use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
+use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
+use TwoJays\NeonApiWrapper\Services\Accounts\AccountsService;
+
+uses()->group('services');
+
+beforeEach(function(){
+    $this->mockHandler = new MockHandler([]);
+
+    $client = new Client(['handler' => HandlerStack::create($this->mockHandler)]);
+
+    $this->service = new AccountsService($client);
+});
+
+it('can list accounts', function () {
+    $responseContent = [
+        'accounts' => [
+            [
+                'accountId' => (string) fake()->numberBetween(100,5000),
+                'firstName' => fake()->firstName(),
+                'lastName' => fake()->lastName(),
+                'companyName' => fake()->company(),
+                'email' => fake()->email(),
+                'userType' => "INDIVIDUAL",
+            ]
+        ],
+        'pagination' => [
+            'currentPage' => 1,
+            'pageSize' => 10,
+            'sortColumn' => null,
+            'sortDirection' => null,
+            'totalPages' => 82,
+            'totalResults' => 812,
+        ]
+    ];
+
+    $this->mockHandler->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->listAccounts(
+        userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
+    );
+
+    expect($response)->toBeInstanceOf(AccountSearchResultData::class);
+    
+    expect($response->accounts)
+            ->toHaveLength(count($responseContent['accounts']))
+            ->each
+                ->toBeInstanceOf(AccountSearchResultItemData::class)
+                ->toMatchObject($responseContent['accounts'][0]);
+    
+    expect($response->pagination)
+        ->toBeInstanceOf(PaginationData::class)
+        ->toMatchObject($responseContent['pagination']);
+});
