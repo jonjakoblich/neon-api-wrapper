@@ -22,17 +22,4 @@ abstract class BaseService implements ServiceProvider
 
         return DtoFactory::create($response, $returnType);
     }
-
-    protected function prepareRequestParameters(array $required, array $optional): array
-    {
-        $params = $required;
-
-        foreach ($optional as $key => $value) {
-            if ($value !== null) {
-                $params[$key] = $value;
-            }
-        }
-
-        return $params;
-    }
 }

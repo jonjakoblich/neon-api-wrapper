@@ -64,14 +64,10 @@ class AccountsService extends BaseService
         ?string $sortDirection = PaginationSortDirectionEnum::DESC->value
     ): AccountDonationSearchResultData 
     {
-        $params = $this->prepareRequestParameters(
-            [
-                'id' => $accountId,
-            ],
-            compact('currentPage','sortColumn','sortDirection')
+        return $this->getResponse(
+            new GetAccountDonationsRequest(...func_get_args()),
+            AccountDonationSearchResultData::class
         );
-
-        return $this->makeRequest(new GetAccountDonationsRequest(), $params);
     }
 
     public function getAccountEventRegistrations()
@@ -87,14 +83,10 @@ class AccountsService extends BaseService
         ?string $sortDirection = PaginationSortDirectionEnum::DESC->value
     ): MembershipListResponseData
     {
-        $params = $this->prepareRequestParameters(
-            [
-                'id' => $accountId,
-            ],
-            compact('currentPage','pageSize','sortColumn','sortDirection')
+        return $this->getResponse(
+            new GetAccountMembershipsRequest(...func_get_args()),
+            MembershipListResponseData::class
         );
-
-        return $this->makeRequest(new GetAccountMembershipsRequest(), $params);
     }
 
     public function getAccountOrders()
@@ -109,13 +101,9 @@ class AccountsService extends BaseService
         ?string $sortDirection = PaginationSortDirectionEnum::DESC->value
     ): AccountPledgeSearchResultData
     {
-        $params = $this->prepareRequestParameters(
-            [
-                'id' => $accountId,
-            ],
-            compact('currentPage','sortColumn','sortDirection')
+        return $this->getResponse(
+            new GetAccountPledgesRequest(...func_get_args()),
+            AccountPledgeSearchResultData::class
         );
-
-        return $this->makeRequest(new GetAccountPledgesRequest(), $params);
     }
 }
