@@ -9,7 +9,7 @@ class AccountSearchResultData extends Data
 {
     public function __construct(
         #[ArrayOf(AccountSearchResultItemData::class)]
-        public array $accounts,
+        public ?array $accounts,
         public PaginationData $pagination
     ) {}
 }

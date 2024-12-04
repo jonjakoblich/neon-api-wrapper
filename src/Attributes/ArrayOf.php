@@ -16,8 +16,7 @@ class ArrayOf implements PropertyTransformer
     public function transform(mixed $data): mixed
     {
         return array_map(function(array $classParams){
-            $instantiateDataObject = new DtoFactory($this->className, $classParams);
-            return $instantiateDataObject();
+            return DtoFactory::create($classParams, $this->className);
         }, $data);
     }
 }

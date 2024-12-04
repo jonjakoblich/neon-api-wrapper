@@ -23,17 +23,20 @@ use TwoJays\NeonApiWrapper\Services\BaseService;
  */
 
 class AccountsService extends BaseService
-{
-    public function registerRequests()
+{    
+    public function listAccounts(
+        string $userType,
+        int $currentPage = 1,
+        string $email = '',
+        string $firstName = '',
+        string $lastName = '',
+        int $pageSize = 10,
+    ): AccountSearchResultData
     {
-        // register endpoints and requests   
-    }
-    
-    public function listAccounts(ListAccountsRequest $request): AccountSearchResultData
-    {
-        return $this->makeRequest($request);
-
-        // return $request->execute();
+        return $this->getResponse(
+            new ListAccountsRequest(...func_get_args()),
+            AccountSearchResultData::class
+        );
     }
 
     public function getAccount(string $accountId): AccountData

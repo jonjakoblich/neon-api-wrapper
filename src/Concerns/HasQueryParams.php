@@ -15,11 +15,13 @@ trait HasQueryParams
         $properties = get_object_vars($this);
 
         return array_filter(
-            array_keys($properties), 
-            function (string $property) {
+            $properties, 
+            function (string $key, string $property) {
                 $reflectionProperty = new ReflectionProperty($this, $property);
-                return empty($reflectionProperty->getAttributes(PathParam::class));
-            }
+
+                return empty($reflectionProperty->getAttributes(PathParam::class)) && $property != 'endpoint' && !empty($reflectionProperty->getValue($this)); 
+            },
+            ARRAY_FILTER_USE_BOTH
         );
     }
 }

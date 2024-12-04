@@ -58,7 +58,7 @@ class DtoFactory
         $transformedData = null;
 
         foreach($parameter->getAttributes() as $attribute) {
-            if($attribute instanceof PropertyTransformer)
+            if(is_subclass_of($attribute->getName(), PropertyTransformer::class))
                 $transformedData = $attribute->newInstance()->transform($data);
         }
 
