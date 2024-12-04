@@ -7,7 +7,6 @@ use TwoJays\NeonApiWrapper\Concerns\ExecutesRequests;
 use TwoJays\NeonApiWrapper\Concerns\HasQueryParams;
 use TwoJays\NeonApiWrapper\Contracts\GetRequest;
 use TwoJays\NeonApiWrapper\Contracts\WithQueryParams;
-use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
 
 class ListAccountsRequest implements GetRequest, WithQueryParams
@@ -20,18 +19,13 @@ class ListAccountsRequest implements GetRequest, WithQueryParams
      *   of the AccountSearchResultItemUserTypeEnum
      */
     public function __construct(
-        public string $userType = AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value,
-        public ?int $currentPage = 1,
-        public ?string $email = '',
-        public ?string $firstName = '',
-        public ?string $lastName = '',
-        public ?int $pageSize = 10,
+        public readonly string $userType = AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value,
+        public readonly ?int $currentPage = 1,
+        public readonly ?string $email = '',
+        public readonly ?string $firstName = '',
+        public readonly ?string $lastName = '',
+        public readonly ?int $pageSize = 10,
     ){
         $this->setEndpoint();
-    }
-
-    public function responseDataType(): string
-    {
-        return AccountSearchResultData::class;
     }
 }
