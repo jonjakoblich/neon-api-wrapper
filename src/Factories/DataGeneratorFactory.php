@@ -82,7 +82,7 @@ class DataGeneratorFactory
             'string' => $faker->word(),
             'int', 'integer' => $faker->randomNumber(),
             'float', 'double' => $faker->randomFloat(2, 0, 1000),
-            'bool', 'boolean' => $faker->boolean,
+            'bool', 'boolean' => $faker->boolean(),
             'DateTime' => $faker->dateTime,
             default => null,
         };

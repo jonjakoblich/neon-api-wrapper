@@ -28,7 +28,7 @@ class DtoFactory
         foreach ($parameters as $parameter) {
             $paramName = $parameter->getName();
 
-            if(!empty($data[$paramName])) {
+            if(isset($data[$paramName])) {
                 $paramType = $parameter->getType();
                 
                 /** @todo handle parameter attributes */

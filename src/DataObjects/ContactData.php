@@ -2,6 +2,7 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
+use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Data;
 
 class ContactData extends Data
@@ -28,6 +29,7 @@ class ContactData extends Data
         public ?bool $currentEmployer,
         public ?string $startDate,
         public ?string $endDate,
+        #[ArrayOf(AddressData::class)]
         public ?array $addresses
     ) {}
 }

@@ -5,6 +5,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
 use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
@@ -53,17 +54,21 @@ it('can list accounts', function () {
 
 
 it('can get a single account', function () {
-    $responseContent = [
-        'individualAccount' => [],
-        'companyAccounts' => []
-    ];
+    $responseContent = DataGeneratorFactory::generate(AccountData::class)->toArray();
 
     $this->mockHandler->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
 
     $response = $this->service->getAccount('100');
 
     // Assertions
-})->todo();
+    expect($response)->toBeInstanceOf(AccountData::class);
+
+    expect($response->individualAccount)
+        ->toArray()->toMatchArray($responseContent['individualAccount']);
+    
+    expect($response->companyAccount)
+        ->toArray()->toMatchArray($responseContent['companyAccount']);
+});
 
 
 describe('error response handling', function() {
