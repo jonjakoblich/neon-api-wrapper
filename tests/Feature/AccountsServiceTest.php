@@ -12,6 +12,7 @@ use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
 use TwoJays\NeonApiWrapper\Exceptions\ForbiddenException;
 use TwoJays\NeonApiWrapper\Exceptions\NotFoundException;
 use TwoJays\NeonApiWrapper\Exceptions\UnauthorizedException;
+use TwoJays\NeonApiWrapper\Factories\DataGeneratorFactory;
 use TwoJays\NeonApiWrapper\Services\Accounts\AccountsService;
 
 uses()->group('services');
@@ -25,26 +26,7 @@ beforeEach(function(){
 });
 
 it('can list accounts', function () {
-    $responseContent = [
-        'accounts' => [
-            [
-                'accountId' => (string) fake()->numberBetween(100,5000),
-                'firstName' => fake()->firstName(),
-                'lastName' => fake()->lastName(),
-                'companyName' => fake()->company(),
-                'email' => fake()->email(),
-                'userType' => "INDIVIDUAL",
-            ]
-        ],
-        'pagination' => [
-            'currentPage' => 1,
-            'pageSize' => 10,
-            'sortColumn' => null,
-            'sortDirection' => null,
-            'totalPages' => 82,
-            'totalResults' => 812,
-        ]
-    ];
+    $responseContent = DataGeneratorFactory::generate(AccountSearchResultData::class)->toArray();
 
     $this->mockHandler->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
 
@@ -56,9 +38,12 @@ it('can list accounts', function () {
     
     expect($response->accounts)
             ->toHaveLength(count($responseContent['accounts']))
-            ->each
-                ->toBeInstanceOf(AccountSearchResultItemData::class)
-                ->toMatchObject($responseContent['accounts'][0]);
+            ->each(
+                function($account) use($responseContent) {
+                    $account->toBeInstanceOf(AccountSearchResultItemData::class);
+                    $account->toArray()->toBeIn($responseContent['accounts']);
+                }
+            );
     
     expect($response->pagination)
         ->toBeInstanceOf(PaginationData::class)
