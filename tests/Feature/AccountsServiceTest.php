@@ -36,7 +36,8 @@ it('can list accounts', function () {
         userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
     );
 
-    expect($response)->toBeInstanceOf(AccountSearchResultData::class);
+    expect($response)
+        ->toBeInstanceOf(AccountSearchResultData::class);
     
     expect($response->accounts)
             ->toHaveLength(count($responseContent['accounts']))
@@ -56,23 +57,23 @@ it('can list accounts', function () {
 it('can get a single account', function () {
     $responseContent = DataGeneratorFactory::generate(AccountData::class)->toArray();
 
-    $this->mockHandler->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+    $this->mockHandler
+        ->append(
+            new Response(200, [], Utils::streamFor(json_encode($responseContent)))
+        );
 
     $response = $this->service->getAccount('100');
 
     // Assertions
-    expect($response)->toBeInstanceOf(AccountData::class);
-
-    expect($response->individualAccount)
-        ->toArray()->toMatchArray($responseContent['individualAccount']);
-    
-    expect($response->companyAccount)
-        ->toArray()->toMatchArray($responseContent['companyAccount']);
+    expect($response)
+        ->toBeInstanceOf(AccountData::class)
+        ->individualAccount->toArray()->toMatchArray($responseContent['individualAccount'])
+        ->companyAccount->toArray()->toMatchArray($responseContent['companyAccount']);
 });
 
 
-describe('error response handling', function() {
-    it('handles 401 response', function () {
+describe('handles error response types', function() {
+    test('401', function () {
         $this->mockHandler->append(new Response(401, [], Utils::streamFor(json_encode([]))));
         
         expect(fn() => $this->service->listAccounts(
@@ -80,7 +81,7 @@ describe('error response handling', function() {
         ))->toThrow(UnauthorizedException::class, 'Unauthorized access to API');
     });
     
-    it('handles 403 response', function () {
+    test('403', function () {
         $this->mockHandler->append(new Response(403, [], Utils::streamFor(json_encode([]))));
         
         expect(fn() => $this->service->listAccounts(
@@ -88,7 +89,7 @@ describe('error response handling', function() {
         ))->toThrow(ForbiddenException::class, 'Forbidden');
     });
     
-    it('handles 404 response', function () {
+    test('404', function () {
         $this->mockHandler->append(new Response(404, [], Utils::streamFor(json_encode([]))));
         
         expect(fn() => $this->service->listAccounts(
