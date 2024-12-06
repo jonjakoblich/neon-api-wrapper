@@ -12,6 +12,7 @@ use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
+use TwoJays\NeonApiWrapper\DataObjects\OrderListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
 use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
 use TwoJays\NeonApiWrapper\Exceptions\ForbiddenException;
@@ -41,20 +42,18 @@ it('can list accounts', function () {
     );
 
     expect($response)
-        ->toBeInstanceOf(AccountSearchResultData::class);
-    
-    expect($response->accounts)
+        ->toBeInstanceOf(AccountSearchResultData::class)
+        ->accounts
             ->toHaveLength(count($responseContent['accounts']))
             ->each(
                 function($account) use($responseContent) {
                     $account->toBeInstanceOf(AccountSearchResultItemData::class);
                     $account->toArray()->toBeIn($responseContent['accounts']);
                 }
-            );
-    
-    expect($response->pagination)
-        ->toBeInstanceOf(PaginationData::class)
-        ->toMatchObject($responseContent['pagination']);
+            )
+        ->pagination
+            ->toBeInstanceOf(PaginationData::class)
+            ->toMatchObject($responseContent['pagination']);
 });
 
 
@@ -71,8 +70,10 @@ it('gets a single account', function () {
     // Assertions
     expect($response)
         ->toBeInstanceOf(AccountData::class)
-        ->individualAccount->toArray()->toMatchArray($responseContent['individualAccount'])
-        ->companyAccount->toArray()->toMatchArray($responseContent['companyAccount']);
+        ->individualAccount
+            ->toArray()->toMatchArray($responseContent['individualAccount'])
+        ->companyAccount
+            ->toArray()->toMatchArray($responseContent['companyAccount']);
 });
 
 
@@ -125,7 +126,7 @@ it('gets donations for a single account', function () {
 
 
 it('gets orders for a single account', function () {
-    $responseContent = DataGeneratorFactory::generate(AccountOrderData::class)->toArray();
+    $responseContent = DataGeneratorFactory::generate(OrderListResponseData::class)->toArray();
 
     $this->mockHandler
         ->append(
@@ -136,7 +137,18 @@ it('gets orders for a single account', function () {
 
     // Assertions
     expect($response)
-        ->toBeInstanceOf(AccountOrderData::class);
+        ->toBeInstanceOf(OrderListResponseData::class)
+        ->orders
+            ->toHaveLength(count($responseContent['orders']))
+            ->each(
+                function($order) use($responseContent) {
+                    $order->toBeInstanceOf(AccountOrderData::class);
+                    $order->toArray()->toBeIn($responseContent['orders']);
+                }
+            )
+        ->pagination
+            ->toBeInstanceOf(PaginationData::class)
+            ->toMatchObject($responseContent['pagination']);
 });
 
 

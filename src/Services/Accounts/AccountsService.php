@@ -8,6 +8,7 @@ use TwoJays\NeonApiWrapper\DataObjects\AccountOrderData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
+use TwoJays\NeonApiWrapper\DataObjects\OrderListResponseData;
 use TwoJays\NeonApiWrapper\Enums\PaginationSortDirectionEnum;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountDonationsRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountMembershipsRequest;
@@ -97,11 +98,11 @@ class AccountsService extends BaseService
        ?string $sortColumn = 'date', 
        ?string $sortDirection = PaginationSortDirectionEnum::DESC->value,
        ?array $transactionTypes = [],
-    ): AccountOrderData
+    ): OrderListResponseData
     {
         return $this->getResponse(
             new GetAccountOrdersRequest(...func_get_args()),
-            AccountOrderData::class
+            OrderListResponseData::class
         );
     }
 
