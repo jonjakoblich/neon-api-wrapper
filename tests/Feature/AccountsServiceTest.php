@@ -5,12 +5,14 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use TwoJays\NeonApiWrapper\DataObjects\AccountContactsData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountOrderData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
+use TwoJays\NeonApiWrapper\DataObjects\ContactData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\OrderListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
@@ -144,6 +146,33 @@ it('gets orders for a single account', function () {
                 function($order) use($responseContent) {
                     $order->toBeInstanceOf(AccountOrderData::class);
                     $order->toArray()->toBeIn($responseContent['orders']);
+                }
+            )
+        ->pagination
+            ->toBeInstanceOf(PaginationData::class)
+            ->toMatchObject($responseContent['pagination']);
+});
+
+
+it('lists contacts for a single account', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountContactsData::class)->toArray();
+
+    $this->mockHandler
+        ->append(
+            new Response(200, [], Utils::streamFor(json_encode($responseContent)))
+        );
+
+    $response = $this->service->listAccountContacts('100');
+
+    // Assertions
+    expect($response)
+        ->toBeInstanceOf(AccountContactsData::class)
+        ->contacts
+            ->toHaveLength(count($responseContent['contacts']))
+            ->each(
+                function($contact) use($responseContent) {
+                    $contact->toBeInstanceOf(ContactData::class);
+                    $contact->toArray()->toBeIn($responseContent['contacts']);
                 }
             )
         ->pagination

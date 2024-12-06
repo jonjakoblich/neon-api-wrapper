@@ -2,9 +2,9 @@
 
 namespace TwoJays\NeonApiWrapper\Services\Accounts;
 
+use TwoJays\NeonApiWrapper\DataObjects\AccountContactsData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
-use TwoJays\NeonApiWrapper\DataObjects\AccountOrderData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
@@ -15,6 +15,7 @@ use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountMembershipsReque
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountOrdersRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountPledgesRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\ListAccountContactsRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\ListAccountsRequest;
 use TwoJays\NeonApiWrapper\Services\BaseService;
 
@@ -48,16 +49,6 @@ class AccountsService extends BaseService
             AccountData::class
         );
     }
-    
-    public function listAccountContacts()
-    {
-
-    }
-
-    public function getAccountContact()
-    {
-    
-    }
 
     public function getAccountDonations(
         string $accountId, 
@@ -70,11 +61,6 @@ class AccountsService extends BaseService
             new GetAccountDonationsRequest(...func_get_args()),
             AccountDonationSearchResultData::class
         );
-    }
-
-    public function getAccountEventRegistrations()
-    {
-
     }
 
     public function getAccountMemberships(
@@ -117,5 +103,26 @@ class AccountsService extends BaseService
             new GetAccountPledgesRequest(...func_get_args()),
             AccountPledgeSearchResultData::class
         );
+    }
+
+    public function listAccountContacts(
+        string $accountId,
+        ?int $currentPage = 0,
+    ): AccountContactsData
+    {
+        return $this->getResponse(
+            new ListAccountContactsRequest(...func_get_args()),
+            AccountContactsData::class
+        );
+    }
+
+    public function getAccountContact()
+    {
+    
+    }
+
+    public function getAccountEventRegistrations()
+    {
+
     }
 }
