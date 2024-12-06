@@ -2,6 +2,7 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
+use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Data;
 
 class MembershipData extends Data
@@ -32,7 +33,8 @@ class MembershipData extends Data
         public OriginData $origin,
         public ?bool $sendAutoRenewalEnabledEmail,
         public ?bool $payLater,
-        public array $payments,
+        #[ArrayOf(PaymentData::class)]
+        public ?array $payments,
         public ?bool $donorCoveredFeeFlag,
         public ?float $donorCoveredFee,
         public ?float $totalCharge,

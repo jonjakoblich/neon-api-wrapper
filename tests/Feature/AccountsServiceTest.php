@@ -6,8 +6,11 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
+use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
 use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
 use TwoJays\NeonApiWrapper\Exceptions\ForbiddenException;
@@ -54,7 +57,7 @@ it('can list accounts', function () {
 });
 
 
-it('can get a single account', function () {
+it('gets a single account', function () {
     $responseContent = DataGeneratorFactory::generate(AccountData::class)->toArray();
 
     $this->mockHandler
@@ -69,6 +72,54 @@ it('can get a single account', function () {
         ->toBeInstanceOf(AccountData::class)
         ->individualAccount->toArray()->toMatchArray($responseContent['individualAccount'])
         ->companyAccount->toArray()->toMatchArray($responseContent['companyAccount']);
+});
+
+
+it('gets memberships for a single account', function () {
+    $responseContent = DataGeneratorFactory::generate(MembershipListResponseData::class)->toArray();
+
+    $this->mockHandler
+        ->append(
+            new Response(200, [], Utils::streamFor(json_encode($responseContent)))
+        );
+
+    $response = $this->service->getAccountMemberships('100');
+
+    // Assertions
+    expect($response)
+        ->toBeInstanceOf(MembershipListResponseData::class);
+});
+
+
+it('gets pledges for a single account', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountPledgeSearchResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(
+            new Response(200, [], Utils::streamFor(json_encode($responseContent)))
+        );
+
+    $response = $this->service->getAccountPledges('100');
+
+    // Assertions
+    expect($response)
+        ->toBeInstanceOf(AccountPledgeSearchResultData::class);
+});
+
+
+it('gets donations for a single account', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountDonationSearchResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(
+            new Response(200, [], Utils::streamFor(json_encode($responseContent)))
+        );
+
+    $response = $this->service->getAccountDonations('100');
+
+    // Assertions
+    expect($response)
+        ->toBeInstanceOf(AccountDonationSearchResultData::class);
 });
 
 
