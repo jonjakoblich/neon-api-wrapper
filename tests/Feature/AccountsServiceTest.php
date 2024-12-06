@@ -123,28 +123,30 @@ it('gets donations for a single account', function () {
 });
 
 
-describe('handles error response types', function() {
-    test('401', function () {
+describe('handles error responses', function() {
+
+    it('throws UnauthorizedException for code 401', function () {
         $this->mockHandler->append(new Response(401, [], Utils::streamFor(json_encode([]))));
-        
-        expect(fn() => $this->service->listAccounts(
-            userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
-        ))->toThrow(UnauthorizedException::class, 'Unauthorized access to API');
-    });
     
-    test('403', function () {
+        $this->service->listAccounts(
+            userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
+        );
+    })->throws(UnauthorizedException::class, 'Unauthorized access to API');
+    
+    it('throws ForbiddenException for code 403', function () {
         $this->mockHandler->append(new Response(403, [], Utils::streamFor(json_encode([]))));
-        
-        expect(fn() => $this->service->listAccounts(
-            userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
-        ))->toThrow(ForbiddenException::class, 'Forbidden');
-    });
     
-    test('404', function () {
-        $this->mockHandler->append(new Response(404, [], Utils::streamFor(json_encode([]))));
-        
-        expect(fn() => $this->service->listAccounts(
+        $this->service->listAccounts(
             userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
-        ))->toThrow(NotFoundException::class, 'The requested URL could not be found');
-    });
+        );
+    })->throws(ForbiddenException::class, 'Forbidden');
+    
+    it('throws NotFoundException for code 404', function () {
+        $this->mockHandler->append(new Response(404, [], Utils::streamFor(json_encode([]))));
+    
+        $this->service->listAccounts(
+            userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value
+        );
+    })->throws(NotFoundException::class, 'The requested URL could not be found');
+
 });
