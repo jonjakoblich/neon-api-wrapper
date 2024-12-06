@@ -16,12 +16,12 @@ trait HasQueryParams
 
         return array_filter(
             $properties, 
-            function (string $key, string $property) {
-                $reflectionProperty = new ReflectionProperty($this, $property);
+            function (string $key) {
+                $reflectionProperty = new ReflectionProperty($this, $key);
 
-                return empty($reflectionProperty->getAttributes(PathParam::class)) && $property != 'endpoint' && !empty($reflectionProperty->getValue($this)); 
+                return empty($reflectionProperty->getAttributes(PathParam::class)) && $key != 'endpoint' && !empty($reflectionProperty->getValue($this)); 
             },
-            ARRAY_FILTER_USE_BOTH
+            ARRAY_FILTER_USE_KEY
         );
     }
 }

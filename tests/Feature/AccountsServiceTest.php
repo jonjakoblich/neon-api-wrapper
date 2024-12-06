@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountOrderData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
@@ -120,6 +121,22 @@ it('gets donations for a single account', function () {
     // Assertions
     expect($response)
         ->toBeInstanceOf(AccountDonationSearchResultData::class);
+});
+
+
+it('gets orders for a single account', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountOrderData::class)->toArray();
+
+    $this->mockHandler
+        ->append(
+            new Response(200, [], Utils::streamFor(json_encode($responseContent)))
+        );
+
+    $response = $this->service->getAccountOrders('100');
+
+    // Assertions
+    expect($response)
+        ->toBeInstanceOf(AccountOrderData::class);
 });
 
 

@@ -4,12 +4,14 @@ namespace TwoJays\NeonApiWrapper\Services\Accounts;
 
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountOrderData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\Enums\PaginationSortDirectionEnum;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountDonationsRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountMembershipsRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountOrdersRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountPledgesRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\ListAccountsRequest;
@@ -22,7 +24,7 @@ use TwoJays\NeonApiWrapper\Services\BaseService;
  */
 
 class AccountsService extends BaseService
-{    
+{   
     public function listAccounts(
         string $userType,
         int $currentPage = 1,
@@ -88,9 +90,19 @@ class AccountsService extends BaseService
         );
     }
 
-    public function getAccountOrders()
+    public function getAccountOrders(
+       string $accountId, 
+       ?int $currentPage = 0, 
+       ?int $pageSize = 20, 
+       ?string $sortColumn = 'date', 
+       ?string $sortDirection = PaginationSortDirectionEnum::DESC->value,
+       ?array $transactionTypes = [],
+    ): AccountOrderData
     {
-
+        return $this->getResponse(
+            new GetAccountOrdersRequest(...func_get_args()),
+            AccountOrderData::class
+        );
     }
 
     public function getAccountPledges(
