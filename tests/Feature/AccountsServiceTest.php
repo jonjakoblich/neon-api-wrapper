@@ -28,7 +28,8 @@ beforeEach(function(){
 it('can list accounts', function () {
     $responseContent = DataGeneratorFactory::generate(AccountSearchResultData::class)->toArray();
 
-    $this->mockHandler->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
 
     $response = $this->service->listAccounts(
         userType: AccountSearchResultItemUserTypeEnum::INDIVIDUAL->value

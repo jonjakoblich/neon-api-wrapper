@@ -9,6 +9,9 @@ use ReflectionNamedType;
 use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Contracts\DataObject;
 
+/**
+ * Helper class for testing.
+ */
 class DataGeneratorFactory
 {
     private static $faker;
@@ -21,6 +24,13 @@ class DataGeneratorFactory
         return self::$faker;
     }
 
+    /**
+     * Instantiates a DataObject object and populates it with
+     * fake sample data, obeying the property types.
+     * 
+     * Best alternative to creating hundreds of static JSON
+     * API response files for moking and testing.
+     */
     public static function generate(string $className): DataObject
     {
         if (!class_exists($className)) {
