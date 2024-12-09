@@ -23,7 +23,7 @@ use TwoJays\NeonApiWrapper\Exceptions\UnauthorizedException;
 use TwoJays\NeonApiWrapper\Factories\DataGeneratorFactory;
 use TwoJays\NeonApiWrapper\Services\Accounts\AccountsService;
 
-uses()->group('services');
+uses()->group('services','accounts');
 
 beforeEach(function(){
     $this->mockHandler = new MockHandler([]);
