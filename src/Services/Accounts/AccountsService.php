@@ -7,9 +7,11 @@ use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\ContactData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\OrderListResponseData;
 use TwoJays\NeonApiWrapper\Enums\PaginationSortDirectionEnum;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountContactRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountDonationsRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountMembershipsRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountOrdersRequest;
@@ -116,13 +118,14 @@ class AccountsService extends BaseService
         );
     }
 
-    public function getAccountContact()
+    public function getAccountContact(
+        string $accountId,
+        string $contactId,
+    ): ContactData
     {
-    
-    }
-
-    public function getAccountEventRegistrations()
-    {
-
+        return $this->getResponse(
+            new GetAccountContactRequest(...func_get_args()),
+            ContactData::class,
+        );
     }
 }

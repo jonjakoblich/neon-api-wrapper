@@ -154,7 +154,7 @@ it('gets orders for a single account', function () {
 });
 
 
-it('lists contacts for a single account', function () {
+it('lists contacts for a company account', function () {
     $responseContent = DataGeneratorFactory::generate(AccountContactsData::class)->toArray();
 
     $this->mockHandler
@@ -180,6 +180,23 @@ it('lists contacts for a single account', function () {
             ->toMatchObject($responseContent['pagination']);
 });
 
+
+it('gets a specific contact from a company account', function () {
+    $responseContent = DataGeneratorFactory::generate(ContactData::class)->toArray();
+
+    $this->mockHandler
+        ->append(
+            new Response(200, [], Utils::streamFor(json_encode($responseContent)))
+        );
+
+    $response = $this->service->getAccountContact('100','1001');
+
+    // Assertions
+    expect($response)
+        ->toBeInstanceOf(ContactData::class)
+        ->accountId->toBe($responseContent['accountId'])
+        ->contactId->toBe($responseContent['contactId']);
+});
 
 describe('handles error responses', function() {
 
