@@ -2,17 +2,23 @@
 
 use TwoJays\NeonApiWrapper\NeonClient;
 use TwoJays\NeonApiWrapper\Services\Accounts\AccountsService;
+use TwoJays\NeonApiWrapper\Services\Addresses\AddressesService;
 
-it('loads all services', function () {
-    $neon = new NeonClient('abc','123');
-    
-    expect($neon)
+beforeEach(function(){
+    $this->neon = new NeonClient('abc','123');
+});
+
+it('loads the accounts service', function () {   
+    expect($this->neon)
         ->accounts()->toBeInstanceOf(AccountsService::class);
 });
 
-it('creates a client', function () {
-    $neon = new NeonClient('abc','123');
+it('loads the addresses service', function () {   
+    expect($this->neon)
+        ->addresses()->toBeInstanceOf(AddressesService::class);
+});
 
-    expect($neon)
+it('creates a client', function () {
+    expect($this->neon)
         ->toHaveProperty('client');
 });
