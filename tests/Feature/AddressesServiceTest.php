@@ -5,6 +5,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use TwoJays\NeonApiWrapper\DataObjects\AccountIdAndRefIdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AddressData;
 use TwoJays\NeonApiWrapper\DataObjects\DeletedEntityData;
 use TwoJays\NeonApiWrapper\Exceptions\ForbiddenException;
@@ -38,8 +39,16 @@ it('gets an address by id', function () {
 });
 
 it('creates a new address', function () {
-    //expect()->
-})->todo();
+   $responseContent = ['id' => $this->address->addressId, 'accountId' => fake()->randomNumber(4)];
+   
+   $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->createAddress($this->address);
+
+    expect($response)
+        ->toBeInstanceOf(AccountIdAndRefIdResultData::class);
+})->skip('waiting for NeonOne support response on JSON format error issue');
 
 it('updates an existing address', function () {
     // Make address modifications here
