@@ -7,6 +7,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Uri;
 use TwoJays\NeonApiWrapper\Services\Accounts\AccountsService;
 use TwoJays\NeonApiWrapper\Services\Addresses\AddressesService;
+use TwoJays\NeonApiWrapper\Services\Memberships\MembershipsService;
 
 final class NeonClient
 {    
@@ -14,6 +15,7 @@ final class NeonClient
 
     private AccountsService $accounts;
     private AddressesService $addresses;
+    private MembershipsService $memberships;
 
     public function __construct(
         private readonly string $apiKey,
@@ -30,6 +32,7 @@ final class NeonClient
         // Initialize services
         $this->accounts = new AccountsService($this->client);
         $this->addresses = new AddressesService($this->client);
+        $this->memberships = new MembershipsService($this->client);
     }
 
     public function accounts(): AccountsService
@@ -40,5 +43,10 @@ final class NeonClient
     public function addresses(): AddressesService
     {
         return $this->addresses;
-    }    
+    }
+    
+    public function memberships(): MembershipsService
+    {
+        return $this->memberships;
+    }
 }
