@@ -3,6 +3,8 @@
 namespace TwoJays\NeonApiWrapper\Services\Addresses;
 
 use TwoJays\NeonApiWrapper\DataObjects\AddressData;
+use TwoJays\NeonApiWrapper\DataObjects\DeletedEntityData;
+use TwoJays\NeonApiWrapper\Services\Addresses\Requests\DeleteAddressRequest;
 use TwoJays\NeonApiWrapper\Services\Addresses\Requests\GetAddressRequest;
 use TwoJays\NeonApiWrapper\Services\Addresses\Requests\UpdateAddressRequest;
 use TwoJays\NeonApiWrapper\Services\BaseService;
@@ -14,7 +16,7 @@ class AddressesService extends BaseService
     ): AddressData
     {
         return $this->getResponse(
-            new GetAddressRequest(...func_get_args()),
+            new GetAddressRequest($addressId),
             AddressData::class
         );
     }
@@ -27,6 +29,16 @@ class AddressesService extends BaseService
         return $this->getResponse(
             new UpdateAddressRequest(...func_get_args()),
             AddressData::class,
+        );
+    }
+
+    public function deleteAddress(
+        string $addressId,
+    ): DeletedEntityData
+    {
+        return $this->getResponse(
+            new DeleteAddressRequest($addressId),
+            DeletedEntityData::class
         );
     }
 }

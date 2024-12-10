@@ -6,6 +6,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\AddressData;
+use TwoJays\NeonApiWrapper\DataObjects\DeletedEntityData;
 use TwoJays\NeonApiWrapper\Exceptions\ForbiddenException;
 use TwoJays\NeonApiWrapper\Exceptions\NotFoundException;
 use TwoJays\NeonApiWrapper\Exceptions\UnauthorizedException;
@@ -56,8 +57,14 @@ it('updates an existing address', function () {
 })->skip('waiting for NeonOne support response on JSON format error issue');
 
 it('deletes an existing address', function () {
-    //expect()->
-})->todo();
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode([]))));
+
+    $response = $this->service->deleteAddress('101');
+
+    expect($response)
+        ->toBeInstanceOf(DeletedEntityData::class);
+});
 
 // Add error handling
 describe('handles error responses', function() {

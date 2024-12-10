@@ -21,22 +21,24 @@ trait ExecutesRequests
             $this->parameterizeEndpoint();
 
         if($this instanceof WithRequestBodyParam)
-            $options['body'] = json_encode($this->getBody());
+            $options['json'] = json_encode($this->getBody());
 
         try {
             $response = $client->request($this::METHOD, $this->getEndpoint(), $options);
         } catch (\Throwable $th) {
             $exception = match ($th->getCode()) {
+                400 => Exceptions\BadRequestException::class,
                 401 => Exceptions\UnauthorizedException::class,
                 403 => Exceptions\ForbiddenException::class,
                 404 => Exceptions\NotFoundException::class,
+                415 => Exceptions\UnsupportedMediaTypeException::class,
             };
 
-            throw new $exception;
+            throw new $exception($th);
         }
 
         $responseBodyContents = json_decode($response->getBody()->getContents(), true);
 
-        return $responseBodyContents;
+        return $responseBodyContents ?? [];
     }
 }
