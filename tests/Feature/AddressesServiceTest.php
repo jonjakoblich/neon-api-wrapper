@@ -20,10 +20,12 @@ beforeEach(function(){
     $client = new Client(['handler' => HandlerStack::create($this->mockHandler)]);
 
     $this->service = new AddressesService($client);
+
+    $this->address = DataGeneratorFactory::generate(AddressData::class);
 });
 
 it('gets an address by id', function () {
-    $responseContent = DataGeneratorFactory::generate(AddressData::class)->toArray();
+    $responseContent = $this->address->toArray();
 
     $this->mockHandler
         ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
@@ -39,8 +41,19 @@ it('creates a new address', function () {
 })->todo();
 
 it('updates an existing address', function () {
-    //expect()->
-})->todo();
+    // Make address modifications here
+    //$this->address->addressLine1 = '123 Main St.';
+
+    $responseContent = $this->address->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->updateAddress('100',$this->address);
+
+    expect($response)
+        ->toBeInstanceOf(AddressData::class);
+})->skip('waiting for NeonOne support response on JSON format error issue');
 
 it('deletes an existing address', function () {
     //expect()->

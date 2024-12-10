@@ -5,6 +5,7 @@ namespace TwoJays\NeonApiWrapper\Concerns;
 use GuzzleHttp\ClientInterface;
 use TwoJays\NeonApiWrapper\Contracts\WithPathParams;
 use TwoJays\NeonApiWrapper\Contracts\WithQueryParams;
+use TwoJays\NeonApiWrapper\Contracts\WithRequestBodyParam;
 use TwoJays\NeonApiWrapper\Exceptions;
 
 trait ExecutesRequests
@@ -18,6 +19,9 @@ trait ExecutesRequests
 
         if($this instanceof WithPathParams)
             $this->parameterizeEndpoint();
+
+        if($this instanceof WithRequestBodyParam)
+            $options['body'] = json_encode($this->getBody());
 
         try {
             $response = $client->request($this::METHOD, $this->getEndpoint(), $options);
