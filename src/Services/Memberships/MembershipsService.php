@@ -17,4 +17,14 @@ class MembershipsService extends BaseService
             MembershipAutoRenewalData::class
         );
     }
+
+    /* public function getSubMembers(
+        string $membershipId,
+    ): SubMembershipListData
+    {
+        return $this->getResponse(
+            new GetSubMembersRequest($membershipId),
+            SubMembershipListData::class
+        );
+    } */
 }

@@ -7,6 +7,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipAutoRenewalData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
+use TwoJays\NeonApiWrapper\DataObjects\SubMembershipData;
 use TwoJays\NeonApiWrapper\Factories\DataGeneratorFactory;
 use TwoJays\NeonApiWrapper\Services\Memberships\MembershipsService;
 
@@ -67,5 +68,13 @@ it('adds a payment for a membership', function () {
 })->todo();
 
 it('lists sub members of a membership', function () {
-    //expect()->
-})->todo();
+    $responseContent = DataGeneratorFactory::generate(SubMembershipData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->getSubMembers('101');
+
+    expect($response)
+        ->toBeArray();
+})->skip('Needs better implementation from the Neon One team.');
