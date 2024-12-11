@@ -27,8 +27,16 @@ beforeEach(function(){
 });
 
 it('gets a specific membership', function () {
-    //expect()->
-})->todo();
+    $responseContent = DataGeneratorFactory::generate(MembershipData::class)->toArray();
+
+    $this->mockHandler 
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->getMembership('123');
+
+    expect($response)
+        ->toBeInstanceOf(MembershipData::class);
+});
 
 it('creates a membership', function () {
     //expect()->

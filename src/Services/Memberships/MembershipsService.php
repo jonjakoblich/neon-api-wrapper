@@ -3,15 +3,27 @@
 namespace TwoJays\NeonApiWrapper\Services\Memberships;
 
 use TwoJays\NeonApiWrapper\DataObjects\MembershipAutoRenewalData;
+use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipLevelsResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipTermsResponseData;
 use TwoJays\NeonApiWrapper\Services\BaseService;
 use TwoJays\NeonApiWrapper\Services\Memberships\Requests\GetMembershipAutoRenewalRequest;
 use TwoJays\NeonApiWrapper\Services\Memberships\Requests\GetMembershipLevelsRequest;
+use TwoJays\NeonApiWrapper\Services\Memberships\Requests\GetMembershipRequest;
 use TwoJays\NeonApiWrapper\Services\Memberships\Requests\GetMembershipTermsRequest;
 
 class MembershipsService extends BaseService
 {
+    public function getMembership(
+        string $membershipId,
+    ): MembershipData
+    {
+        return $this->getResponse(
+            new GetMembershipRequest($membershipId),
+            MembershipData::class
+        );
+    }
+
     public function getMembershipAutoRenewal(
         string $membershipId
     ): MembershipAutoRenewalData
