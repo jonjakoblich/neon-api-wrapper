@@ -29,7 +29,7 @@ class DataGeneratorFactory
      * fake sample data, obeying the property types.
      * 
      * Best alternative to creating hundreds of static JSON
-     * API response files for moking and testing.
+     * API response files for mocking and testing.
      */
     public static function generate(string $className): DataObject
     {
