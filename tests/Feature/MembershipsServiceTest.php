@@ -7,7 +7,9 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipAutoRenewalData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
+use TwoJays\NeonApiWrapper\DataObjects\MembershipLevelsResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\SubMembershipData;
+use TwoJays\NeonApiWrapper\Enums\MembershipLevelStatusEnum;
 use TwoJays\NeonApiWrapper\Factories\DataGeneratorFactory;
 use TwoJays\NeonApiWrapper\Services\Memberships\MembershipsService;
 
@@ -51,9 +53,23 @@ it('updates a membership', function () {
     //expect()->
 })->todo();
 
-it('gets a list of membership terms', function () {
+it('gets membership terms', function () {
     //expect()->
-})->todo();
+});
+
+it('gets a list of membership Levels', function () {
+    $responseContent = DataGeneratorFactory::generate(MembershipLevelsResponseData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->getLevels(
+        status: MembershipLevelStatusEnum::ACTIVE->value
+    );
+
+    expect($response)
+        ->toBeInstanceOf(MembershipLevelsResponseData::class);
+});
 
 it('calculates the cost of a membership', function () {
     //expect()->
