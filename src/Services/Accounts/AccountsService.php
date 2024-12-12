@@ -5,6 +5,7 @@ namespace TwoJays\NeonApiWrapper\Services\Accounts;
 use TwoJays\NeonApiWrapper\DataObjects\AccountContactsData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountIdAndRefIdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountIdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
@@ -12,6 +13,7 @@ use TwoJays\NeonApiWrapper\DataObjects\ContactData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\OrderListResponseData;
 use TwoJays\NeonApiWrapper\Enums\PaginationSortDirectionEnum;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\CreateAccountContactRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\DeleteAccountContactRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountContactRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountDonationsRequest;
@@ -152,6 +154,17 @@ class AccountsService extends BaseService
         return $this->getResponse(
             new DeleteAccountContactRequest(...func_get_args()),
             AccountIdResultData::class
+        );
+    }
+
+    public function createContact(
+        string $accountId,
+        ContactData $contact,
+    ): AccountIdAndRefIdResultData
+    {
+        return $this->getResponse(
+            new CreateAccountContactRequest(...func_get_args()),
+            AccountIdAndRefIdResultData::class
         );
     }
 }

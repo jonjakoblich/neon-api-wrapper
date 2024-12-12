@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\AccountContactsData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountIdAndRefIdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountIdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountOrderData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
@@ -212,8 +213,18 @@ it('updates an account contact', function () {
 });
 
 it('creates an account contact', function () {
-    //expect()->
-})->todo();
+    $responseContent = DataGeneratorFactory::generate(AccountIdAndRefIdResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $contact = DataGeneratorFactory::generate(ContactData::class);
+
+    $response = $this->service->createContact('1',$contact);
+
+    expect($response)
+        ->toBeInstanceOf(AccountIdAndRefIdResultData::class);
+});
 
 it('deletes an account contact', function () {
     $responseContent = DataGeneratorFactory::generate(AccountIdResultData::class)->toArray();
