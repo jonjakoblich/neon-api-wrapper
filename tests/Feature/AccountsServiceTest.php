@@ -15,6 +15,8 @@ use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
 use TwoJays\NeonApiWrapper\DataObjects\ContactData;
+use TwoJays\NeonApiWrapper\DataObjects\IndividualToCompanyData;
+use TwoJays\NeonApiWrapper\DataObjects\LinkIndividualToCompanyData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\OrderListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
@@ -233,6 +235,32 @@ it('deletes an account contact', function () {
         ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
 
     $response = $this->service->deleteContact('1','12');
+
+    expect($response)
+        ->toBeInstanceOf(AccountIdResultData::class);
+});
+
+it('links an individual account to a company account', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountIdResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+    
+    $individualAccount = DataGeneratorFactory::generate(LinkIndividualToCompanyData::class);
+    $response = $this->service->linkIndividualToCompany($individualAccount);
+
+    expect($response)
+        ->toBeInstanceOf(AccountIdResultData::class);
+});
+
+it('removes an individual account from a company account', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountIdResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+    
+    $individualAccount = DataGeneratorFactory::generate(IndividualToCompanyData::class);
+    $response = $this->service->unlinkIndividualToCompany($individualAccount);
 
     expect($response)
         ->toBeInstanceOf(AccountIdResultData::class);

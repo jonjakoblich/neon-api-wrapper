@@ -10,6 +10,8 @@ use TwoJays\NeonApiWrapper\DataObjects\AccountIdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\ContactData;
+use TwoJays\NeonApiWrapper\DataObjects\IndividualToCompanyData;
+use TwoJays\NeonApiWrapper\DataObjects\LinkIndividualToCompanyData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\OrderListResponseData;
 use TwoJays\NeonApiWrapper\Enums\PaginationSortDirectionEnum;
@@ -21,8 +23,10 @@ use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountMembershipsReque
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountOrdersRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountPledgesRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\LinkIndividualToCompanyAccountRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\ListAccountContactsRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\ListAccountsRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\UnlinkIndividualToCompanyAccountRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\UpdateAccountContactRequest;
 use TwoJays\NeonApiWrapper\Services\BaseService;
 
@@ -165,6 +169,26 @@ class AccountsService extends BaseService
         return $this->getResponse(
             new CreateAccountContactRequest(...func_get_args()),
             AccountIdAndRefIdResultData::class
+        );
+    }
+
+    public function linkIndividualToCompany(
+        LinkIndividualToCompanyData $request,
+    ): AccountIdResultData
+    {
+        return $this->getResponse(
+            new LinkIndividualToCompanyAccountRequest($request),
+            AccountIdResultData::class
+        );
+    }
+    
+    public function unlinkIndividualToCompany(
+        IndividualToCompanyData $request,
+    ): AccountIdResultData
+    {
+        return $this->getResponse(
+            new UnlinkIndividualToCompanyAccountRequest($request),
+            AccountIdResultData::class
         );
     }
 }
