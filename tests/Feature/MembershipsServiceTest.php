@@ -10,6 +10,7 @@ use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipLevelsResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipTermsResponseData;
+use TwoJays\NeonApiWrapper\DataObjects\ResponseEntityData;
 use TwoJays\NeonApiWrapper\DataObjects\SubMembershipData;
 use TwoJays\NeonApiWrapper\Enums\MembershipLevelStatusEnum;
 use TwoJays\NeonApiWrapper\Factories\DataGeneratorFactory;
@@ -58,15 +59,24 @@ it('gets a membership auto renewal', function () {
     $this->mockHandler
         ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
 
-    $response = $this->service->getMembershipAutoRenewal('100');
+    $response = $this->service->getAutoRenewal('100');
 
     expect($response)
         ->toBeInstanceOf(MembershipAutoRenewalData::class);
 });
 
 it('edits a membership auto renewal', function () {
-    //expect()->
-})->todo();
+    $responseContent = DataGeneratorFactory::generate(ResponseEntityData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $data = DataGeneratorFactory::generate(MembershipAutoRenewalData::class);
+    $response = $this->service->editAutoRenewal('101', $data);
+
+    expect($response)
+        ->toBeInstanceOf(ResponseEntityData::class);
+});
 
 it('updates a membership', function () {
     //expect()->

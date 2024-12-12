@@ -3,6 +3,8 @@
 namespace TwoJays\NeonApiWrapper\Services\Memberships;
 
 use TwoJays\NeonApiWrapper\DataObjects;
+use TwoJays\NeonApiWrapper\DataObjects\MembershipAutoRenewalData;
+use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
 use TwoJays\NeonApiWrapper\Services\BaseService;
 
 class MembershipsService extends BaseService
@@ -27,13 +29,24 @@ class MembershipsService extends BaseService
         );
     }
 
-    public function getMembershipAutoRenewal(
+    public function getAutoRenewal(
         string $membershipId
     ): DataObjects\MembershipAutoRenewalData
     {
         return $this->getResponse(
             new Requests\GetMembershipAutoRenewalRequest($membershipId),
             DataObjects\MembershipAutoRenewalData::class
+        );
+    }
+
+    public function editAutoRenewal(
+        string $membershipId,
+        MembershipAutoRenewalData $autoRenewal,
+    ): DataObjects\ResponseEntityData
+    {
+        return $this->getResponse(
+            new Requests\EditAutoRenewalRequest(...func_get_args()),
+            DataoBjects\ResponseEntityData::class
         );
     }
 
