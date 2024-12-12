@@ -14,13 +14,13 @@ trait ExecutesRequests
     {
         $options = [];
 
-        if($this instanceof WithQueryParams)
+        if($this instanceof WithQueryParams && method_exists($this, 'getQueryParams'))
             $options['query'] = $this->getQueryParams();
 
-        if($this instanceof WithPathParams)
+        if($this instanceof WithPathParams && method_exists($this, 'parameterizeEndpoint'))
             $this->parameterizeEndpoint();
 
-        if($this instanceof WithRequestBodyParam)
+        if($this instanceof WithRequestBodyParam && method_exists($this, 'getBody'))
             $options['json'] = $this->getBody();
 
         // dump($options);
