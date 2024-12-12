@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipAutoRenewalData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipLevelsResponseData;
+use TwoJays\NeonApiWrapper\DataObjects\MembershipResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipTermsResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\SubMembershipData;
 use TwoJays\NeonApiWrapper\Enums\MembershipLevelStatusEnum;
@@ -39,8 +40,17 @@ it('gets a specific membership', function () {
 });
 
 it('creates a membership', function () {
-    //expect()->
-})->todo();
+    $responseContent = DataGeneratorFactory::generate(MembershipResponseData::class)->toArray();
+
+    $this->mockHandler 
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $membership = DataGeneratorFactory::generate(MembershipData::class);
+    $response = $this->service->createMembership($membership);
+
+    expect($response)
+        ->toBeInstanceOf(MembershipResponseData::class);
+});
 
 it('gets a membership auto renewal', function () {
     $responseContent = DataGeneratorFactory::generate(MembershipAutoRenewalData::class)->toArray();

@@ -27,6 +27,7 @@ class MembershipData extends Data
         public ?bool $sendAcknowledgeEmail,
         public string $status,
         public ?int $complimentary,
+        #[ArrayOf(CustomFieldData::class)]
         public ?array $membershipCustomFields,
         public TaxDeducibleInfoData $taxDeductibleInfo,
         public TimestampsData $timestamps,
@@ -39,8 +40,10 @@ class MembershipData extends Data
         public ?float $donorCoveredFee,
         public ?float $totalCharge,
         public ?float $totalDiscount,
+        #[ArrayOf(DiscountItemData::class)]
         public ?array $discounts,
         public ?CraInfoData $craInfo,
+        #[ArrayOf(SubMembershipData::class)]
         public ?array $subMembers,
     ) {}
 }

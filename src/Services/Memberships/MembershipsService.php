@@ -17,6 +17,16 @@ class MembershipsService extends BaseService
         );
     }
 
+    public function createMembership(
+        DataObjects\MembershipData $membership
+    ): DataObjects\MembershipResponseData
+    {
+        return $this->getResponse(
+            new Requests\CreateMembershipRequest($membership),
+            DataObjects\MembershipResponseData::class
+        );
+    }
+
     public function getMembershipAutoRenewal(
         string $membershipId
     ): DataObjects\MembershipAutoRenewalData
