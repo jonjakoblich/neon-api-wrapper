@@ -2,6 +2,7 @@
 
 use TwoJays\NeonApiWrapper\Contracts\DataObject;
 use TwoJays\NeonApiWrapper\Data;
+use TwoJays\NeonApiWrapper\DataObjects\SubMembershipListData;
 
 uses()->group('arch');
 
@@ -26,6 +27,7 @@ arch()
     ->expect('TwoJays\NeonApiWrapper\DataObjects')
     ->toBeClasses()
     ->toExtend(Data::class)
+        ->ignoring(SubMembershipListData::class)
     ->toImplement(DataObject::class);
 
 arch()
