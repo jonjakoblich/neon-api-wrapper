@@ -125,16 +125,16 @@ class MembershipsService extends BaseService
         );
     }
 
-    /** 
-     * Skipping this one for now. The return format is simply an array.
+    /**
+     * This returns an array in order to match the API specification.
      */
-    /* public function getSubMembers(
+    public function getSubMembers(
         string $membershipId,
-    ): DataObjects\SubMembershipListData
+    ): array
     {
         return $this->getResponse(
             new Requests\GetSubMembersRequest($membershipId),
             DataObjects\SubMembershipListData::class
-        );
-    } */
+        )->toArray();
+    }
 }

@@ -170,7 +170,8 @@ it('adds a payment for a membership', function () {
 });
 
 it('lists sub members of a membership', function () {
-    $responseContent = DataGeneratorFactory::generate(SubMembershipData::class)->toArray();
+    $data = [DataGeneratorFactory::generate(SubMembershipData::class)];
+    $responseContent = $data;
 
     $this->mockHandler
         ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
@@ -178,5 +179,6 @@ it('lists sub members of a membership', function () {
     $response = $this->service->getSubMembers('101');
 
     expect($response)
-        ->toBeArray();
-})->skip('Needs better implementation from the Neon One team.');
+        ->toBeArray()
+        ->each->toBeInstanceOf(SubMembershipData::class);
+});

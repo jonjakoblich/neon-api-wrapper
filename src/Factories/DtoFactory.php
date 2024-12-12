@@ -2,6 +2,7 @@
 
 namespace TwoJays\NeonApiWrapper\Factories;
 
+use ArrayObject;
 use ReflectionClass;
 use ReflectionParameter;
 use TwoJays\NeonApiWrapper\Contracts\DataObject;
@@ -20,6 +21,9 @@ class DtoFactory
 
     private static function instantiateDataObject(string $className, array $data)
     {
+        if(is_subclass_of($className, ArrayObject::class))
+            return new $className($data);
+
         $reflectionClass = new ReflectionClass($className);
         $constructor = $reflectionClass->getConstructor();
         $parameters = $constructor->getParameters();
