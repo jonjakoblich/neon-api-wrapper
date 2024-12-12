@@ -3,8 +3,6 @@
 namespace TwoJays\NeonApiWrapper\Services\Memberships;
 
 use TwoJays\NeonApiWrapper\DataObjects;
-use TwoJays\NeonApiWrapper\DataObjects\MembershipAutoRenewalData;
-use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
 use TwoJays\NeonApiWrapper\Services\BaseService;
 
 class MembershipsService extends BaseService
@@ -29,6 +27,17 @@ class MembershipsService extends BaseService
         );
     }
 
+    public function updateMembership(
+        string $membershipId,
+        DataObjects\MembershipData $membership,
+    ): DataObjects\MembershipResponseData
+    {
+        return $this->getResponse(
+            new Requests\UpdateMembershipRequest(...func_get_args()),
+            DataObjects\MembershipResponseData::class
+        );
+    }
+
     public function getAutoRenewal(
         string $membershipId
     ): DataObjects\MembershipAutoRenewalData
@@ -41,7 +50,7 @@ class MembershipsService extends BaseService
 
     public function editAutoRenewal(
         string $membershipId,
-        MembershipAutoRenewalData $autoRenewal,
+        DataObjects\MembershipAutoRenewalData $autoRenewal,
     ): DataObjects\ResponseEntityData
     {
         return $this->getResponse(
@@ -71,6 +80,26 @@ class MembershipsService extends BaseService
         return $this->getResponse(
             new Requests\GetMembershipTermsRequest(...func_get_args()),
             DataObjects\MembershipTermsResponseData::class
+        );
+    }
+
+    public function calculateFee(
+        DataObjects\MembershipData $membership
+    ): DataObjects\MembershipCalculateResultData
+    {
+        return $this->getResponse(
+            new Requests\CalculateMembershipFeeRequest(...func_get_args()),
+            DataObjects\MembershipCalculateResultData::class
+        );
+    }
+    
+    public function calculateDates(
+        DataObjects\MembershipData $membership
+    ): DataObjects\MembershipCalculateDatesResultData
+    {
+        return $this->getResponse(
+            new Requests\CalculateMembershipDatesRequest(...func_get_args()),
+            DataObjects\MembershipCalculateDatesResultData::class
         );
     }
 

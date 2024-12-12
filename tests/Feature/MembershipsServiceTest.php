@@ -6,6 +6,8 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipAutoRenewalData;
+use TwoJays\NeonApiWrapper\DataObjects\MembershipCalculateDatesResultData;
+use TwoJays\NeonApiWrapper\DataObjects\MembershipCalculateResultData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipLevelsResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipResponseData;
@@ -78,9 +80,21 @@ it('edits a membership auto renewal', function () {
         ->toBeInstanceOf(ResponseEntityData::class);
 });
 
-it('updates a membership', function () {
+it('renews a membership', function () {
     //expect()->
 })->todo();
+
+it('updates a membership', function () {
+    $responseContent = DataGeneratorFactory::generate(MembershipResponseData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->updateMembership('101', $this->membership);
+
+    expect($response)
+        ->toBeInstanceOf(MembershipResponseData::class);
+});
 
 it('gets membership terms', function () {
     $responseContent = DataGeneratorFactory::generate(MembershipTermsResponseData::class)->toArray();
@@ -109,12 +123,28 @@ it('gets a list of membership Levels', function () {
 });
 
 it('calculates the cost of a membership', function () {
-    //expect()->
-})->todo();
+    $responseContent = DataGeneratorFactory::generate(MembershipCalculateResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->calculateFee($this->membership);
+
+    expect($response)
+        ->toBeInstanceOf(MembershipCalculateResultData::class);
+});
 
 it('calculates the membership term start and end dates', function () {
-    //expect()->
-})->todo();
+    $responseContent = DataGeneratorFactory::generate(MembershipCalculateDatesResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->calculateDates($this->membership);
+
+    expect($response)
+        ->toBeInstanceOf(MembershipCalculateDatesResultData::class);
+});
 
 it('adds a payment for a membership', function () {
     //expect()->
