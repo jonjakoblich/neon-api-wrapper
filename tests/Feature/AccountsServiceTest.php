@@ -15,6 +15,7 @@ use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultItemData;
 use TwoJays\NeonApiWrapper\DataObjects\ContactData;
+use TwoJays\NeonApiWrapper\DataObjects\IdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\IndividualToCompanyData;
 use TwoJays\NeonApiWrapper\DataObjects\LinkIndividualToCompanyData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
@@ -80,6 +81,20 @@ it('gets a single account', function () {
             ->toArray()->toMatchArray($responseContent['individualAccount'])
         ->companyAccount
             ->toArray()->toMatchArray($responseContent['companyAccount']);
+});
+
+
+it('creates an account', function () {
+    $responseContent = DataGeneratorFactory::generate(IdResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $data = DataGeneratorFactory::generate(AccountData::class);
+    $response = $this->service->createAccount($data);
+
+    expect($response)
+        ->toBeInstanceOf(IdResultData::class);
 });
 
 
