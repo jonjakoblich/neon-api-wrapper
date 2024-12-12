@@ -12,6 +12,8 @@ use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipLevelsResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipTermsResponseData;
+use TwoJays\NeonApiWrapper\DataObjects\PaymentData;
+use TwoJays\NeonApiWrapper\DataObjects\PaymentResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\ResponseEntityData;
 use TwoJays\NeonApiWrapper\DataObjects\SubMembershipData;
 use TwoJays\NeonApiWrapper\Enums\MembershipLevelStatusEnum;
@@ -81,8 +83,16 @@ it('edits a membership auto renewal', function () {
 });
 
 it('renews a membership', function () {
-    //expect()->
-})->todo();
+    $responseContent = DataGeneratorFactory::generate(MembershipResponseData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->renewMembership('101', $this->membership);
+
+    expect($response)
+        ->toBeInstanceOf(MembershipResponseData::class);
+});
 
 it('updates a membership', function () {
     $responseContent = DataGeneratorFactory::generate(MembershipResponseData::class)->toArray();
@@ -147,8 +157,17 @@ it('calculates the membership term start and end dates', function () {
 });
 
 it('adds a payment for a membership', function () {
-    //expect()->
-})->todo();
+    $responseContent = DataGeneratorFactory::generate(PaymentResponseData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $payment = DataGeneratorFactory::generate(PaymentData::class);
+    $response = $this->service->addPayment($this->membership->id,$payment);
+
+    expect($response)
+        ->toBeInstanceOf(PaymentResponseData::class);
+});
 
 it('lists sub members of a membership', function () {
     $responseContent = DataGeneratorFactory::generate(SubMembershipData::class)->toArray();

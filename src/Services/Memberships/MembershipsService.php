@@ -59,6 +59,17 @@ class MembershipsService extends BaseService
         );
     }
 
+    public function renewMembership(
+        string $membershipId,
+        DataObjects\MembershipData $membership,
+    ): DataObjects\MembershipResponseData
+    {
+        return $this->getResponse(
+            new Requests\RenewMembershipRequest(...func_get_args()),
+            DataObjects\MembershipResponseData::class
+        );
+    }
+
     public function getLevels(
         string $status,
         int $currentPage = 0,
@@ -103,6 +114,20 @@ class MembershipsService extends BaseService
         );
     }
 
+    public function addPayment(
+        string $membershipId,
+        DataObjects\PaymentData $payemnt,
+    ): DataObjects\PaymentResponseData
+    {
+        return $this->getResponse(
+            new Requests\AddMembershipPaymentRequest(...func_get_args()),
+            DataObjects\PaymentResponseData::class
+        );
+    }
+
+    /** 
+     * Skipping this one for now. The return format is simply an array.
+     */
     /* public function getSubMembers(
         string $membershipId,
     ): DataObjects\SubMembershipListData
