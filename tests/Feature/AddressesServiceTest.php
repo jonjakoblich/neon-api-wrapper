@@ -6,6 +6,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\AccountIdAndRefIdResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AddressAddData;
 use TwoJays\NeonApiWrapper\DataObjects\AddressData;
 use TwoJays\NeonApiWrapper\DataObjects\DeletedEntityData;
 use TwoJays\NeonApiWrapper\Exceptions\ForbiddenException;
@@ -39,16 +40,17 @@ it('gets an address by id', function () {
 });
 
 it('creates a new address', function () {
-   $responseContent = ['id' => $this->address->addressId, 'accountId' => fake()->randomNumber(4)];
+    $responseContent = ['id' => $this->address->addressId, 'accountId' => fake()->randomNumber(4)];
    
-   $this->mockHandler
+    $this->mockHandler
         ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
 
-    $response = $this->service->createAddress($this->address);
+    $data = DataGeneratorFactory::generate(AddressAddData::class);
+    $response = $this->service->createAddress($data);
 
     expect($response)
         ->toBeInstanceOf(AccountIdAndRefIdResultData::class);
-})->skip('waiting for NeonOne support response on JSON format error issue');
+});
 
 it('updates an existing address', function () {
     // Make address modifications here
@@ -63,7 +65,7 @@ it('updates an existing address', function () {
 
     expect($response)
         ->toBeInstanceOf(AddressData::class);
-})->skip('waiting for NeonOne support response on JSON format error issue');
+});
 
 it('deletes an existing address', function () {
     $this->mockHandler
