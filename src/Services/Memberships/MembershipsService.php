@@ -2,35 +2,28 @@
 
 namespace TwoJays\NeonApiWrapper\Services\Memberships;
 
-use TwoJays\NeonApiWrapper\DataObjects\MembershipAutoRenewalData;
-use TwoJays\NeonApiWrapper\DataObjects\MembershipData;
-use TwoJays\NeonApiWrapper\DataObjects\MembershipLevelsResponseData;
-use TwoJays\NeonApiWrapper\DataObjects\MembershipTermsResponseData;
+use TwoJays\NeonApiWrapper\DataObjects;
 use TwoJays\NeonApiWrapper\Services\BaseService;
-use TwoJays\NeonApiWrapper\Services\Memberships\Requests\GetMembershipAutoRenewalRequest;
-use TwoJays\NeonApiWrapper\Services\Memberships\Requests\GetMembershipLevelsRequest;
-use TwoJays\NeonApiWrapper\Services\Memberships\Requests\GetMembershipRequest;
-use TwoJays\NeonApiWrapper\Services\Memberships\Requests\GetMembershipTermsRequest;
 
 class MembershipsService extends BaseService
 {
     public function getMembership(
         string $membershipId,
-    ): MembershipData
+    ): DataObjects\MembershipData
     {
         return $this->getResponse(
-            new GetMembershipRequest($membershipId),
-            MembershipData::class
+            new Requests\GetMembershipRequest($membershipId),
+            DataObjects\MembershipData::class
         );
     }
 
     public function getMembershipAutoRenewal(
         string $membershipId
-    ): MembershipAutoRenewalData
+    ): DataObjects\MembershipAutoRenewalData
     {
         return $this->getResponse(
-            new GetMembershipAutoRenewalRequest($membershipId),
-            MembershipAutoRenewalData::class
+            new Requests\GetMembershipAutoRenewalRequest($membershipId),
+            DataObjects\MembershipAutoRenewalData::class
         );
     }
 
@@ -38,11 +31,11 @@ class MembershipsService extends BaseService
         string $status,
         int $currentPage = 0,
         int $pageSize = 20,
-    ): MembershipLevelsResponseData
+    ): DataObjects\MembershipLevelsResponseData
     {
         return $this->getResponse(
-            new GetMembershipLevelsRequest(...func_get_args()),
-            MembershipLevelsResponseData::class
+            new Requests\GetMembershipLevelsRequest(...func_get_args()),
+            DataObjects\MembershipLevelsResponseData::class
         );
     }
 
@@ -50,21 +43,21 @@ class MembershipsService extends BaseService
         string $levelId,
         int $currentPage = 0,
         int $pageSize = 20,
-    ): MembershipTermsResponseData
+    ): DataObjects\MembershipTermsResponseData
     {
         return $this->getResponse(
-            new GetMembershipTermsRequest(...func_get_args()),
-            MembershipTermsResponseData::class
+            new Requests\GetMembershipTermsRequest(...func_get_args()),
+            DataObjects\MembershipTermsResponseData::class
         );
     }
 
     /* public function getSubMembers(
         string $membershipId,
-    ): SubMembershipListData
+    ): DataObjects\SubMembershipListData
     {
         return $this->getResponse(
-            new GetSubMembersRequest($membershipId),
-            SubMembershipListData::class
+            new Requests\GetSubMembersRequest($membershipId),
+            DataObjects\SubMembershipListData::class
         );
     } */
 }

@@ -2,56 +2,49 @@
 
 namespace TwoJays\NeonApiWrapper\Services\Addresses;
 
-use TwoJays\NeonApiWrapper\DataObjects\AccountIdAndRefIdResultData;
-use TwoJays\NeonApiWrapper\DataObjects\AddressAddData;
-use TwoJays\NeonApiWrapper\DataObjects\AddressData;
-use TwoJays\NeonApiWrapper\DataObjects\DeletedEntityData;
-use TwoJays\NeonApiWrapper\Services\Addresses\Requests\CreateAddressRequest;
-use TwoJays\NeonApiWrapper\Services\Addresses\Requests\DeleteAddressRequest;
-use TwoJays\NeonApiWrapper\Services\Addresses\Requests\GetAddressRequest;
-use TwoJays\NeonApiWrapper\Services\Addresses\Requests\UpdateAddressRequest;
+use TwoJays\NeonApiWrapper\DataObjects;
 use TwoJays\NeonApiWrapper\Services\BaseService;
 
 class AddressesService extends BaseService
 {
     public function getAddress(
         string $addressId,
-    ): AddressData
+    ): DataObjects\AddressData
     {
         return $this->getResponse(
-            new GetAddressRequest($addressId),
-            AddressData::class
+            new Requests\GetAddressRequest($addressId),
+            DataObjects\AddressData::class
         );
     }
 
     public function updateAddress(
         string $addressId,
-        AddressData $address,
-    ): AddressData
+        DataObjects\AddressData $address,
+    ): DataObjects\AddressData
     {
         return $this->getResponse(
-            new UpdateAddressRequest(...func_get_args()),
-            AddressData::class,
+            new Requests\UpdateAddressRequest(...func_get_args()),
+            DataObjects\AddressData::class,
         );
     }
 
     public function deleteAddress(
         string $addressId,
-    ): DeletedEntityData
+    ): DataObjects\DeletedEntityData
     {
         return $this->getResponse(
-            new DeleteAddressRequest($addressId),
-            DeletedEntityData::class
+            new Requests\DeleteAddressRequest($addressId),
+            DataObjects\DeletedEntityData::class
         );
     }
 
     public function createAddress(
-        AddressAddData $address,
-    ): AccountIdAndRefIdResultData
+        DataObjects\AddressAddData $address,
+    ): DataObjects\AccountIdAndRefIdResultData
     {
         return $this->getResponse(
-            new CreateAddressRequest($address),
-            AccountIdAndRefIdResultData::class
+            new Requests\CreateAddressRequest($address),
+            DataObjects\AccountIdAndRefIdResultData::class
         );
     }
 }
