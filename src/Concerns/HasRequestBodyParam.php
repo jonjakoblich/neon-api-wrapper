@@ -27,6 +27,15 @@ trait HasRequestBodyParam
             throw new InvalidPropertyTypeException($bodyParam, DataObject::class);
         }
 
-        return [$bodyParam => $this->$bodyParam->toArray()];
+        // Exclude null parameters
+        $props = array_filter(
+            $this->$bodyParam->toArray(),
+            fn($item) => $item !== null
+        );
+
+        // dump($props);
+        // die();
+
+        return [$bodyParam => $props];
     }
 }

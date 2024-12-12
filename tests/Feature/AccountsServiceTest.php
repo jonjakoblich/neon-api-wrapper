@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Utils;
 use TwoJays\NeonApiWrapper\DataObjects\AccountContactsData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountIdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountOrderData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
@@ -196,6 +197,34 @@ it('gets a specific contact from a company account', function () {
         ->toBeInstanceOf(ContactData::class)
         ->accountId->toBe($responseContent['accountId'])
         ->contactId->toBe($responseContent['contactId']);
+});
+
+it('updates an account contact', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountIdResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->updateContact('1','12',DataGeneratorFactory::generate(ContactData::class));
+
+    expect($response)
+        ->toBeInstanceOf(AccountIdResultData::class);
+});
+
+it('creates an account contact', function () {
+    //expect()->
+})->todo();
+
+it('deletes an account contact', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountIdResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->deleteContact('1','12');
+
+    expect($response)
+        ->toBeInstanceOf(AccountIdResultData::class);
 });
 
 describe('handles error responses', function() {

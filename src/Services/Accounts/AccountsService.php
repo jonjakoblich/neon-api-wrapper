@@ -5,12 +5,14 @@ namespace TwoJays\NeonApiWrapper\Services\Accounts;
 use TwoJays\NeonApiWrapper\DataObjects\AccountContactsData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountDonationSearchResultData;
+use TwoJays\NeonApiWrapper\DataObjects\AccountIdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountPledgeSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AccountSearchResultData;
 use TwoJays\NeonApiWrapper\DataObjects\ContactData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\OrderListResponseData;
 use TwoJays\NeonApiWrapper\Enums\PaginationSortDirectionEnum;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\DeleteAccountContactRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountContactRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountDonationsRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountMembershipsRequest;
@@ -19,6 +21,7 @@ use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountPledgesRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\GetAccountRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\ListAccountContactsRequest;
 use TwoJays\NeonApiWrapper\Services\Accounts\Requests\ListAccountsRequest;
+use TwoJays\NeonApiWrapper\Services\Accounts\Requests\UpdateAccountContactRequest;
 use TwoJays\NeonApiWrapper\Services\BaseService;
 
 /**
@@ -126,6 +129,29 @@ class AccountsService extends BaseService
         return $this->getResponse(
             new GetAccountContactRequest(...func_get_args()),
             ContactData::class,
+        );
+    }
+
+    public function updateContact(
+        string $contactId,
+        string $accountId,
+        ContactData $contact,
+    ): AccountIdResultData
+    {
+        return $this->getResponse(
+            new UpdateAccountContactRequest(...func_get_args()),
+            AccountIdResultData::class
+        );
+    }
+
+    public function deleteContact(
+        string $contactId,
+        string $accountId,
+    ): AccountIdResultData
+    {
+        return $this->getResponse(
+            new DeleteAccountContactRequest(...func_get_args()),
+            AccountIdResultData::class
         );
     }
 }

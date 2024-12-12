@@ -21,7 +21,10 @@ trait ExecutesRequests
             $this->parameterizeEndpoint();
 
         if($this instanceof WithRequestBodyParam)
-            $options['json'] = json_encode($this->getBody());
+            $options['json'] = $this->getBody();
+
+        // dump($options);
+        // die();
 
         try {
             $response = $client->request($this::METHOD, $this->getEndpoint(), $options);
