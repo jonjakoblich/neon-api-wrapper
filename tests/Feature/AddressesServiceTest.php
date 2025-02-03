@@ -9,6 +9,7 @@ use TwoJays\NeonApiWrapper\DataObjects\AccountIdAndRefIdResultData;
 use TwoJays\NeonApiWrapper\DataObjects\AddressAddData;
 use TwoJays\NeonApiWrapper\DataObjects\AddressData;
 use TwoJays\NeonApiWrapper\DataObjects\DeletedEntityData;
+use TwoJays\NeonApiWrapper\DataObjects\EmptyData;
 use TwoJays\NeonApiWrapper\Exceptions\ForbiddenException;
 use TwoJays\NeonApiWrapper\Exceptions\NotFoundException;
 use TwoJays\NeonApiWrapper\Exceptions\UnauthorizedException;
@@ -64,7 +65,7 @@ it('updates an existing address', function () {
     $response = $this->service->updateAddress('100',$this->address);
 
     expect($response)
-        ->toBeInstanceOf(AddressData::class);
+        ->toBeInstanceOf(EmptyData::class);
 });
 
 it('deletes an existing address', function () {

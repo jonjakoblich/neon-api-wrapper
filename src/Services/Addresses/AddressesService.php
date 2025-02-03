@@ -20,11 +20,11 @@ class AddressesService extends BaseService
     public function updateAddress(
         string $addressId,
         DataObjects\AddressData $address,
-    ): DataObjects\AddressData
+    ): DataObjects\EmptyData
     {
         return $this->getResponse(
             new Requests\UpdateAddressRequest(...func_get_args()),
-            DataObjects\AddressData::class,
+            DataObjects\EmptyData::class,
         );
     }
 
