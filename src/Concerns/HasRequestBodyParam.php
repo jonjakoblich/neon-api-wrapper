@@ -33,9 +33,6 @@ trait HasRequestBodyParam
             fn($item) => $item !== null
         );
 
-        // dump($props);
-        // die();
-
-        return [$bodyParam => $props];
+        return $props;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace TwoJays\NeonApiWrapper\Concerns;
 
+use Exception;
 use GuzzleHttp\ClientInterface;
 use TwoJays\NeonApiWrapper\Contracts\WithPathParams;
 use TwoJays\NeonApiWrapper\Contracts\WithQueryParams;
@@ -20,11 +21,10 @@ trait ExecutesRequests
         if($this instanceof WithPathParams && method_exists($this, 'parameterizeEndpoint'))
             $this->parameterizeEndpoint();
 
-        if($this instanceof WithRequestBodyParam && method_exists($this, 'getBody'))
-            $options['json'] = $this->getBody();
-
-        // dump($options);
-        // die();
+        if($this instanceof WithRequestBodyParam && method_exists($this, 'getBody')) {
+            $options['body'] = json_encode($this->getBody());
+            $options['headers']['Content-Type'] = 'application/json';
+        }
 
         try {
             $response = $client->request($this::METHOD, $this->getEndpoint(), $options);
@@ -35,6 +35,7 @@ trait ExecutesRequests
                 403 => Exceptions\ForbiddenException::class,
                 404 => Exceptions\NotFoundException::class,
                 415 => Exceptions\UnsupportedMediaTypeException::class,
+                default => Exception::class
             };
 
             throw new $exception($th);
