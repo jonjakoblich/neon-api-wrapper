@@ -1,7 +1,7 @@
 {
     "name": "jonjakoblich/neon-api-wrapper",
     "description": "A PHP wrapper for the Neon CRM API.",
-    "version": "0.1",
+    "version": "0.1.1",
     "license": "MIT",
     "type": "library",
     "require": {
