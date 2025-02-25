@@ -7,9 +7,9 @@ use TwoJays\NeonApiWrapper\Data;
 class PaymentData extends Data
 {
     public function __construct(
-        public string $id,
         public float $amount,
-        public string $paymentStatus,
+        public ?string $id,
+        public ?string $paymentStatus,
         public ?string $note,
         public ?int $tenderType,
         public ?string $receivedDate,
