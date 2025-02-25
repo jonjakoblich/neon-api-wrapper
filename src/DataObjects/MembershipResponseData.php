@@ -10,9 +10,9 @@ class MembershipResponseData extends Data
     public function __construct(
         public string $id,
         #[ArrayOf(SubMembershipResponseData::class)]
-        public array $subMembershipResponses,
+        public ?array $subMembershipResponses,
         public string $accountId,
-        public PaymentResponseData $paymentResponse,
+        public ?PaymentResponseData $paymentResponse,
         public IdNamePairData $membershipLevel,
         public IdNamePairData $membershipTerm,
         public string $status
