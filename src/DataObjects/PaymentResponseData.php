@@ -9,6 +9,6 @@ class PaymentResponseData extends Data
     public function __construct(
         public string $id,
         public string $status,
-        public string $statusMessage
+        public ?string $statusMessage
     ) {}
 }

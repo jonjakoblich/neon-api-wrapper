@@ -8,10 +8,10 @@ class PaymentData extends Data
 {
     public function __construct(
         public float $amount,
+        public int $tenderType,
         public ?string $id,
         public ?string $paymentStatus,
         public ?string $note,
-        public ?int $tenderType,
         public ?string $receivedDate,
         public ?CreditCardOnlinePaymentData $creditCardOnline,
         public ?CreditCardOfflinePaymentData $creditCardOffline,

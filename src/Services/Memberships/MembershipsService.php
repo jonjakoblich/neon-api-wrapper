@@ -116,7 +116,7 @@ class MembershipsService extends BaseService
 
     public function addPayment(
         string $membershipId,
-        DataObjects\PaymentData $payemnt,
+        DataObjects\PaymentData $payment,
     ): DataObjects\PaymentResponseData
     {
         return $this->getResponse(
