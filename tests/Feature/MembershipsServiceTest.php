@@ -5,6 +5,7 @@ use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\Utils;
+use TwoJays\NeonApiWrapper\DataObjects\EmptyData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipAutoRenewalData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipCalculateDatesResultData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipCalculateResultData;
@@ -55,6 +56,17 @@ it('creates a membership', function () {
 
     expect($response)
         ->toBeInstanceOf(MembershipResponseData::class);
+});
+
+it('deletes a membership', function () {
+    $this->mockHandler 
+        ->append(new Response(200, [], Utils::streamFor(json_encode(new class {}))));
+
+    $membership = DataGeneratorFactory::generate(MembershipData::class);
+    $response = $this->service->deleteMembership($membership->accountId);
+
+    expect($response)
+        ->toBeInstanceOf(EmptyData::class);
 });
 
 it('gets a membership auto renewal', function () {

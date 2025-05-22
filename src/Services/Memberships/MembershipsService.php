@@ -26,6 +26,16 @@ class MembershipsService extends BaseService
             DataObjects\MembershipResponseData::class
         );
     }
+    
+    public function deleteMembership(
+        string $membershipId
+    ): DataObjects\EmptyData
+    {
+        return $this->getResponse(
+            new Requests\DeleteMembershipRequest($membershipId),
+            DataObjects\EmptyData::class
+        );
+    }
 
     public function updateMembership(
         string $membershipId,
