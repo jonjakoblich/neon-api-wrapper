@@ -7,12 +7,12 @@ use TwoJays\NeonApiWrapper\Data;
 class CreditCardOfflinePaymentData extends Data
 {
     public function __construct(
-        public ?string $cardNumberLastFour,
-        public ?int $expirationMonth,
-        public ?int $expirationYear,
-        public ?string $cardTypeCode,
-        public ?string $cardHolderName,
-        public ?string $cardHolderEmail,
-        public ?BillingAddressData $billingAddress
+        public ?string $cardNumberLastFour = null,
+        public ?int $expirationMonth = null,
+        public ?int $expirationYear = null,
+        public ?string $cardTypeCode = null,
+        public ?string $cardHolderName = null,
+        public ?string $cardHolderEmail = null,
+        public ?BillingAddressData $billingAddress = null
     ) {}
 }

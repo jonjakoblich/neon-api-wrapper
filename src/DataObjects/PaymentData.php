@@ -9,15 +9,15 @@ class PaymentData extends Data
     public function __construct(
         public float $amount,
         public int $tenderType,
-        public ?string $id,
-        public ?string $paymentStatus,
-        public ?string $note,
-        public ?string $receivedDate,
-        public ?CreditCardOnlinePaymentData $creditCardOnline,
-        public ?CreditCardOfflinePaymentData $creditCardOffline,
-        public ?ECheckPaymentData $ach,
-        public ?CheckPaymentData $check,
-        public ?WirePaymentData $wire,
-        public ?InKindPaymentData $inKind
+        public ?string $id = null,
+        public ?string $paymentStatus = null,
+        public ?string $note = null,
+        public ?string $receivedDate = null,
+        public ?CreditCardOnlinePaymentData $creditCardOnline = null,
+        public ?CreditCardOfflinePaymentData $creditCardOffline = null,
+        public ?ECheckPaymentData $ach = null,
+        public ?CheckPaymentData $check = null,
+        public ?WirePaymentData $wire = null,
+        public ?InKindPaymentData $inKind = null
     ) {}
 }

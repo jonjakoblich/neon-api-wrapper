@@ -13,6 +13,8 @@ class MembershipData extends Data
         public IdNamePairData $membershipTerm,
         public string $transactionDate,
         public float $totalCharge,
+        #[ArrayOf(PaymentData::class)]
+        public array $payments,
         public ?string $id,
         public ?string $parentId,
         public ?bool $autoRenewal,
@@ -35,8 +37,6 @@ class MembershipData extends Data
         public ?OriginData $origin,
         public ?bool $sendAutoRenewalEnabledEmail,
         public ?bool $payLater,
-        #[ArrayOf(PaymentData::class)]
-        public ?array $payments,
         public ?bool $donorCoveredFeeFlag,
         public ?float $donorCoveredFee,
         public ?float $totalDiscount,
