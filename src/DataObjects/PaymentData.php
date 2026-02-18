@@ -18,6 +18,7 @@ class PaymentData extends Data
         public ?ECheckPaymentData $ach = null,
         public ?CheckPaymentData $check = null,
         public ?WirePaymentData $wire = null,
-        public ?InKindPaymentData $inKind = null
+        public ?InKindPaymentData $inKind = null,
+        public ?DafPayPaymentData $dafpay = null
     ) {}
 }

@@ -9,6 +9,7 @@ class DonationData extends Data
 {
     public function __construct(
         public ?string $batchNumber,
+        public ?string $publicRecognitionName,
         public ?string $donorName,
         public string $id,
         public string $accountId,
@@ -30,7 +31,9 @@ class DonationData extends Data
         public array $payments,
         public TimestampsData $timestamps,
         public ?TributeData $tribute,
+        #[ArrayOf(CustomFieldData::class)]
         public ?array $donationCustomFields,
+        public ?SolicitorData $solicitor,
         public ?string $fundraiserAccountId,
         public string $status,
         public ?CraInfoData $craInfo,

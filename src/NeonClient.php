@@ -7,6 +7,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Uri;
 use TwoJays\NeonApiWrapper\Services\Accounts\AccountsService;
 use TwoJays\NeonApiWrapper\Services\Addresses\AddressesService;
+use TwoJays\NeonApiWrapper\Services\Donations\DonationsService;
 use TwoJays\NeonApiWrapper\Services\Memberships\MembershipsService;
 
 final class NeonClient
@@ -15,6 +16,7 @@ final class NeonClient
 
     private AccountsService $accounts;
     private AddressesService $addresses;
+    private DonationsService $donations;
     private MembershipsService $memberships;
 
     public function __construct(
@@ -32,6 +34,7 @@ final class NeonClient
         // Initialize services
         $this->accounts = new AccountsService($this->client);
         $this->addresses = new AddressesService($this->client);
+        $this->donations = new DonationsService($this->client);
         $this->memberships = new MembershipsService($this->client);
     }
 
@@ -45,6 +48,11 @@ final class NeonClient
         return $this->addresses;
     }
     
+    public function donations(): DonationsService
+    {
+        return $this->donations;
+    }
+
     public function memberships(): MembershipsService
     {
         return $this->memberships;
