@@ -23,6 +23,8 @@ use TwoJays\NeonApiWrapper\Services\Roles\RolesService;
 use TwoJays\NeonApiWrapper\Services\TimeSheets\TimeSheetsService;
 use TwoJays\NeonApiWrapper\Services\Volunteers\VolunteersService;
 use TwoJays\NeonApiWrapper\Services\Webhooks\WebhooksService;
+use TwoJays\NeonApiWrapper\Services\Opportunities\OpportunitiesService;
+use TwoJays\NeonApiWrapper\Services\Shifts\ShiftsService;
 use TwoJays\NeonApiWrapper\Services\Windfall\WindfallService;
 
 beforeEach(function(){
@@ -137,6 +139,16 @@ it('loads the volunteers service', function () {
 it('loads the webhooks service', function () {
     expect($this->neon)
         ->webhooks()->toBeInstanceOf(WebhooksService::class);
+});
+
+it('loads the opportunities service', function () {
+    expect($this->neon)
+        ->opportunities()->toBeInstanceOf(OpportunitiesService::class);
+});
+
+it('loads the shifts service', function () {
+    expect($this->neon)
+        ->shifts()->toBeInstanceOf(ShiftsService::class);
 });
 
 it('loads the windfall service', function () {
