@@ -48,6 +48,17 @@ class MembershipsService extends BaseService
         );
     }
 
+    public function patchMembership(
+        string $membershipId,
+        DataObjects\MembershipData $membership,
+    ): DataObjects\MembershipResponseData
+    {
+        return $this->getResponse(
+            new Requests\PatchMembershipRequest(...func_get_args()),
+            DataObjects\MembershipResponseData::class
+        );
+    }
+
     public function getAutoRenewal(
         string $membershipId
     ): DataObjects\MembershipAutoRenewalData

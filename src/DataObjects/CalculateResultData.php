@@ -7,6 +7,6 @@ use TwoJays\NeonApiWrapper\Data;
 class CalculateResultData extends Data
 {
     public function __construct(
-        public float $totalCharge
+        public ?float $totalCharge = null
     ) {}
 }

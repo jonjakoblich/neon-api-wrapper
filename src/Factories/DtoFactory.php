@@ -40,7 +40,11 @@ class DtoFactory
         
                 if ($paramType && !$paramType->isBuiltin()) {
                     $paramClassName = $paramType->getName();
-                    $args[] = self::instantiateDataObject($paramClassName, $paramData);
+                    if (enum_exists($paramClassName)) {
+                        $args[] = $paramClassName::from($paramData);
+                    } else {
+                        $args[] = self::instantiateDataObject($paramClassName, $paramData);
+                    }
                 } else {
                     $args[] = $paramData;
                 }

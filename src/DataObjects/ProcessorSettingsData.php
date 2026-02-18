@@ -7,6 +7,6 @@ use TwoJays\NeonApiWrapper\Data;
 class ProcessorSettingsData extends Data
 {
     public function __construct(
-        public NeonPaySettingData $neonPaySetting
+        public ?NeonPaySettingData $neonPaySetting = null
     ) {}
 }

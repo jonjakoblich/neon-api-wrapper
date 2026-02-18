@@ -5,6 +5,7 @@ namespace TwoJays\NeonApiWrapper\Factories;
 use Faker\Factory;
 use InvalidArgumentException;
 use ReflectionClass;
+use ReflectionEnum;
 use ReflectionNamedType;
 use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Contracts\DataObject;
@@ -48,7 +49,11 @@ class DataGeneratorFactory
                 
                 $propertyTypeName = $propertyType->getName();
                 
-                if (class_exists($propertyTypeName)) {
+                if (enum_exists($propertyTypeName)) {
+                    // Pick a random enum case
+                    $cases = $propertyTypeName::cases();
+                    $property->setValue($instance, $cases[array_rand($cases)]);
+                } elseif (class_exists($propertyTypeName)) {
                     // Recursively instantiate nested DTOs
                     $property->setValue($instance, self::generate($propertyTypeName));
                 } else {

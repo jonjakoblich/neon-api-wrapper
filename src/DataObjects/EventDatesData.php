@@ -7,12 +7,12 @@ use TwoJays\NeonApiWrapper\Data;
 class EventDatesData extends Data
 {
     public function __construct(
-        public string $startDate,
-        public string $endDate,
-        public string $startTime,
-        public string $endTime,
-        public string $registrationOpenDate,
-        public string $registrationCloseDate,
-        public IdNamePairData $timeZone
+        public ?string $startDate = null,
+        public ?string $endDate = null,
+        public ?string $startTime = null,
+        public ?string $endTime = null,
+        public ?string $registrationOpenDate = null,
+        public ?string $registrationCloseDate = null,
+        public ?IdNamePairData $timeZone = null
     ) {}
 }

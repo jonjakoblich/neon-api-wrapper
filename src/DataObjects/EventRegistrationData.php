@@ -2,32 +2,37 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
+use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Data;
 
 class EventRegistrationData extends Data
 {
     public function __construct(
-        public string $id,
-        public string $eventId,
-        public string $registrationDateTime,
-        public string $couponCode,
-        public bool $sendSystemEmail,
-        public float $registrationAmount,
-        public bool $ignoreCapacity,
-        public string $registrantAccountId,
-        public string $fundraiserAccountId,
-        public array $registrantCustomFields,
-        public array $tickets,
-        public IdNamePairData $source,
-        public OriginData $origin,
-        public float $totalCharge,
-        public float $totalDiscount,
-        public array $payments,
-        public bool $donorCoveredFeeFlag,
-        public float $donorCoveredFee,
-        public bool $payLater,
-        public CraInfoData $craInfo,
-        public TaxDeducibleInfoData $taxDeductibleInfo,
-        public array $discounts
+        public ?string $id = null,
+        public ?string $eventId = null,
+        public ?string $registrationDateTime = null,
+        public ?string $couponCode = null,
+        public ?bool $sendSystemEmail = null,
+        public ?float $registrationAmount = null,
+        public ?bool $ignoreCapacity = null,
+        public ?string $registrantAccountId = null,
+        public ?string $fundraiserAccountId = null,
+        #[ArrayOf(CustomFieldData::class)]
+        public ?array $registrantCustomFields = [],
+        #[ArrayOf(TicketData::class)]
+        public ?array $tickets = [],
+        public ?IdNamePairData $source = null,
+        public ?OriginData $origin = null,
+        public ?float $totalCharge = null,
+        public ?float $totalDiscount = null,
+        #[ArrayOf(PaymentData::class)]
+        public ?array $payments = [],
+        public ?bool $donorCoveredFeeFlag = null,
+        public ?float $donorCoveredFee = null,
+        public ?bool $payLater = null,
+        public ?CraInfoData $craInfo = null,
+        public ?TaxDeducibleInfoData $taxDeductibleInfo = null,
+        #[ArrayOf(DiscountItemData::class)]
+        public ?array $discounts = []
     ) {}
 }

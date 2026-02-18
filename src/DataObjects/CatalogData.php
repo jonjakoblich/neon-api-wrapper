@@ -7,9 +7,9 @@ use TwoJays\NeonApiWrapper\Data;
 class CatalogData extends Data
 {
     public function __construct(
-        public int $displaySequence,
-        public string $id,
-        public string $name,
-        public string $status
+        public ?int $displaySequence = null,
+        public ?string $id = null,
+        public ?string $name = null,
+        public ?string $status = null
     ) {}
 }

@@ -7,7 +7,7 @@ use TwoJays\NeonApiWrapper\Data;
 class AccountIdAndRefIdResultData extends Data
 {
     public function __construct(
-        public string $id,
-        public string $accountId
+        public ?string $id = null,
+        public ?string $accountId = null
     ) {}
 }

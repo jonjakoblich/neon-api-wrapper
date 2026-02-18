@@ -7,11 +7,11 @@ use TwoJays\NeonApiWrapper\Data;
 class SoftCreditData extends Data
 {
     public function __construct(
-        public string $id,
-        public string $recipientAccountId,
-        public float $amount,
-        public string $donationId,
-        public string $eventRegistrationId,
-        public string $membershipId
+        public ?string $id = null,
+        public ?string $recipientAccountId = null,
+        public ?float $amount = null,
+        public ?string $donationId = null,
+        public ?string $eventRegistrationId = null,
+        public ?string $membershipId = null
     ) {}
 }

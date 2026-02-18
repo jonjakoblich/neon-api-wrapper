@@ -7,11 +7,11 @@ use TwoJays\NeonApiWrapper\Data;
 class SocialFundraisingData extends Data
 {
     public function __construct(
-        public bool $enabled,
-        public int $fundraisersCount,
-        public string $createFundraiserUrl,
-        public string $fundraiserListUrl,
-        public string $fundraisingPageContent,
-        public CampaignStatsData $statistics
+        public ?bool $enabled = null,
+        public ?int $fundraisersCount = null,
+        public ?string $createFundraiserUrl = null,
+        public ?string $fundraiserListUrl = null,
+        public ?string $fundraisingPageContent = null,
+        public ?CampaignStatsData $statistics = null
     ) {}
 }

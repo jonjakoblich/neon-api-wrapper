@@ -2,36 +2,39 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
+use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Data;
 
 class MembershipItemData extends Data
 {
     public function __construct(
-        public string $id,
-        public array $subMembers,
-        public string $parentId,
-        public string $accountId,
-        public IdNamePairData $membershipLevel,
-        public IdNamePairData $membershipTerm,
-        public bool $autoRenewal,
-        public IdNamePairData $source,
-        public string $changeType,
-        public string $termUnit,
-        public int $termDuration,
-        public string $enrollType,
-        public string $transactionDate,
-        public string $termStartDate,
-        public string $termEndDate,
-        public float $fee,
-        public string $couponCode,
-        public bool $sendAcknowledgeEmail,
-        public string $status,
-        public int $complimentary,
-        public array $membershipCustomFields,
-        public CraInfoData $craInfo,
-        public TaxDeducibleInfoData $taxDeductibleInfo,
-        public TimestampsData $timestamps,
-        public OriginData $origin,
-        public bool $sendAutoRenewalEnabledEmail
+        public ?string $id = null,
+        #[ArrayOf(SubMembershipData::class)]
+        public ?array $subMembers = [],
+        public ?string $parentId = null,
+        public ?string $accountId = null,
+        public ?IdNamePairData $membershipLevel = null,
+        public ?IdNamePairData $membershipTerm = null,
+        public ?bool $autoRenewal = null,
+        public ?IdNamePairData $source = null,
+        public ?string $changeType = null,
+        public ?string $termUnit = null,
+        public ?int $termDuration = null,
+        public ?string $enrollType = null,
+        public ?string $transactionDate = null,
+        public ?string $termStartDate = null,
+        public ?string $termEndDate = null,
+        public ?float $fee = null,
+        public ?string $couponCode = null,
+        public ?bool $sendAcknowledgeEmail = null,
+        public ?string $status = null,
+        public ?int $complimentary = null,
+        #[ArrayOf(CustomFieldData::class)]
+        public ?array $membershipCustomFields = [],
+        public ?CraInfoData $craInfo = null,
+        public ?TaxDeducibleInfoData $taxDeductibleInfo = null,
+        public ?TimestampsData $timestamps = null,
+        public ?OriginData $origin = null,
+        public ?bool $sendAutoRenewalEnabledEmail = null
     ) {}
 }

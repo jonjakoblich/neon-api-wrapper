@@ -68,6 +68,18 @@ it('updates an existing address', function () {
         ->toBeInstanceOf(EmptyData::class);
 });
 
+it('patches an existing address', function () {
+    $responseContent = $this->address->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->patchAddress('100', $this->address);
+
+    expect($response)
+        ->toBeInstanceOf(EmptyData::class);
+});
+
 it('deletes an existing address', function () {
     $this->mockHandler
         ->append(new Response(200, [], Utils::streamFor(json_encode([]))));

@@ -69,6 +69,18 @@ it('deletes a membership', function () {
         ->toBeInstanceOf(EmptyData::class);
 });
 
+it('patches a membership', function () {
+    $responseContent = DataGeneratorFactory::generate(MembershipResponseData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->patchMembership('101', $this->membership);
+
+    expect($response)
+        ->toBeInstanceOf(MembershipResponseData::class);
+});
+
 it('gets a membership auto renewal', function () {
     $responseContent = DataGeneratorFactory::generate(MembershipAutoRenewalData::class)->toArray();
     

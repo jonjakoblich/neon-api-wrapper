@@ -2,25 +2,28 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
+use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Data;
 
 class EventRegistrationItemData extends Data
 {
     public function __construct(
-        public CraInfoData $craInfo,
-        public TaxDeducibleInfoData $taxDeductibleInfo,
-        public string $id,
-        public string $eventId,
-        public string $registrationDateTime,
-        public string $couponCode,
-        public float $taxDeductibleAmount,
-        public bool $sendSystemEmail,
-        public float $registrationAmount,
-        public bool $ignoreCapacity,
-        public string $registrantAccountId,
-        public string $fundraiserAccountId,
-        public array $registrantCustomFields,
-        public array $tickets,
-        public IdNamePairData $source
+        public ?CraInfoData $craInfo = null,
+        public ?TaxDeducibleInfoData $taxDeductibleInfo = null,
+        public ?string $id = null,
+        public ?string $eventId = null,
+        public ?string $registrationDateTime = null,
+        public ?string $couponCode = null,
+        public ?float $taxDeductibleAmount = null,
+        public ?bool $sendSystemEmail = null,
+        public ?float $registrationAmount = null,
+        public ?bool $ignoreCapacity = null,
+        public ?string $registrantAccountId = null,
+        public ?string $fundraiserAccountId = null,
+        #[ArrayOf(CustomFieldData::class)]
+        public ?array $registrantCustomFields = [],
+        #[ArrayOf(TicketData::class)]
+        public ?array $tickets = [],
+        public ?IdNamePairData $source = null
     ) {}
 }

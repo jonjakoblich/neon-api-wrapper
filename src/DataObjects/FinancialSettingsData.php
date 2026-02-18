@@ -7,11 +7,11 @@ use TwoJays\NeonApiWrapper\Data;
 class FinancialSettingsData extends Data
 {
     public function __construct(
-        public string $feeType,
-        public AdmissionFeeData $admissionFee,
-        public TicketsPerRegistrationData $ticketsPerRegistration,
-        public IdNamePairData $fund,
-        public TaxDeductiblePortionData $taxDeductiblePortion,
-        public FinancialSettingsDonationsData $donations
+        public ?string $feeType = null,
+        public ?AdmissionFeeData $admissionFee = null,
+        public ?TicketsPerRegistrationData $ticketsPerRegistration = null,
+        public ?IdNamePairData $fund = null,
+        public ?TaxDeductiblePortionData $taxDeductiblePortion = null,
+        public ?FinancialSettingsDonationsData $donations = null
     ) {}
 }

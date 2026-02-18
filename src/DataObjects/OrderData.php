@@ -2,31 +2,38 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
+use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Data;
 
 class OrderData extends Data
 {
     public function __construct(
-        public array $donations,
-        public string $id,
-        public array $eventRegistrations,
-        public string $orderDate,
-        public string $accountId,
-        public array $products,
-        public array $memberships,
-        public float $totalCharge,
-        public bool $needShipping,
-        public float $subTotal,
-        public OrderShippingData $shipping,
-        public float $tax,
-        public array $discounts,
-        public float $totalDiscount,
-        public bool $donorCoveredFeeFlag,
-        public float $shippingHandlingFee,
-        public float $donorCoveredFee,
-        public string $status,
-        public bool $payLater,
-        public TimestampsData $timestamps,
-        public array $payments
+        #[ArrayOf(DonationItemData::class)]
+        public ?array $donations = [],
+        public ?string $id = null,
+        #[ArrayOf(EventRegistrationItemData::class)]
+        public ?array $eventRegistrations = [],
+        public ?string $orderDate = null,
+        public ?string $accountId = null,
+        #[ArrayOf(ProductItemData::class)]
+        public ?array $products = [],
+        #[ArrayOf(MembershipItemData::class)]
+        public ?array $memberships = [],
+        public ?float $totalCharge = null,
+        public ?bool $needShipping = null,
+        public ?float $subTotal = null,
+        public ?OrderShippingData $shipping = null,
+        public ?float $tax = null,
+        #[ArrayOf(DiscountItemData::class)]
+        public ?array $discounts = [],
+        public ?float $totalDiscount = null,
+        public ?bool $donorCoveredFeeFlag = null,
+        public ?float $shippingHandlingFee = null,
+        public ?float $donorCoveredFee = null,
+        public ?string $status = null,
+        public ?bool $payLater = null,
+        public ?TimestampsData $timestamps = null,
+        #[ArrayOf(PaymentData::class)]
+        public ?array $payments = []
     ) {}
 }

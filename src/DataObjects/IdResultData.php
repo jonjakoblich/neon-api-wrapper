@@ -7,6 +7,6 @@ use TwoJays\NeonApiWrapper\Data;
 class IdResultData extends Data
 {
     public function __construct(
-        public string $id
+        public ?string $id = null
     ) {}
 }

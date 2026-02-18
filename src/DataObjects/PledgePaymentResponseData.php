@@ -7,10 +7,10 @@ use TwoJays\NeonApiWrapper\Data;
 class PledgePaymentResponseData extends Data
 {
     public function __construct(
-        public string $pledgePaymentId,
-        public float $balance,
-        public float $total,
-        public string $installmentId,
-        public PaymentResponseData $paymentResponse
+        public ?string $pledgePaymentId = null,
+        public ?float $balance = null,
+        public ?float $total = null,
+        public ?string $installmentId = null,
+        public ?PaymentResponseData $paymentResponse = null
     ) {}
 }

@@ -152,6 +152,84 @@ class AccountsService extends BaseService
         );
     }
 
+    public function updateAccount(
+        string $accountId,
+        DataObjects\AccountData $apiAccount,
+    ): DataObjects\AccountIdResultData
+    {
+        return $this->getResponse(
+            new Requests\UpdateAccountRequest(...func_get_args()),
+            DataObjects\AccountIdResultData::class
+        );
+    }
+
+    public function patchAccount(
+        string $accountId,
+        DataObjects\AccountData $apiAccount,
+    ): DataObjects\AccountIdResultData
+    {
+        return $this->getResponse(
+            new Requests\PatchAccountRequest(...func_get_args()),
+            DataObjects\AccountIdResultData::class
+        );
+    }
+
+    public function searchAccounts(
+        DataObjects\SearchRequestData $searchRequest
+    ): DataObjects\SearchResponseData
+    {
+        return $this->getResponse(
+            new Requests\SearchAccountsRequest($searchRequest),
+            DataObjects\SearchResponseData::class
+        );
+    }
+
+    public function getSearchOutputFields(
+        ?string $searchKey = null
+    ): DataObjects\OutputFieldsData
+    {
+        return $this->getResponse(
+            new Requests\GetAccountSearchOutputFieldsRequest($searchKey),
+            DataObjects\OutputFieldsData::class
+        );
+    }
+
+    public function getSearchFields(
+        ?string $searchKey = null
+    ): DataObjects\SearchFieldsData
+    {
+        return $this->getResponse(
+            new Requests\GetAccountSearchFieldsRequest($searchKey),
+            DataObjects\SearchFieldsData::class
+        );
+    }
+
+    public function patchContact(
+        string $contactId,
+        string $accountId,
+        DataObjects\ContactData $contact,
+    ): DataObjects\AccountIdResultData
+    {
+        return $this->getResponse(
+            new Requests\PatchAccountContactRequest(...func_get_args()),
+            DataObjects\AccountIdResultData::class
+        );
+    }
+
+    public function getAccountEventRegistrations(
+        string $accountId,
+        ?int $currentPage = 0,
+        ?string $eventId = null,
+        ?string $sortColumn = 'registrationDateTime',
+        ?string $sortDirection = PaginationSortDirectionEnum::DESC->value,
+    ): DataObjects\PaginationEventRegistrationData
+    {
+        return $this->getResponse(
+            new Requests\GetAccountEventRegistrationsRequest(...func_get_args()),
+            DataObjects\PaginationEventRegistrationData::class
+        );
+    }
+
     public function linkIndividualToCompany(
         DataObjects\LinkIndividualToCompanyData $request,
     ): DataObjects\AccountIdResultData

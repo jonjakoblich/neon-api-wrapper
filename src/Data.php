@@ -18,6 +18,8 @@ abstract class Data implements DataObject
                 $array[$key] = $value->toArray();
             } elseif (is_array($value)) {
                 $array[$key] = $this->arrayToArray($value, $key);
+            } elseif ($value instanceof \BackedEnum) {
+                $array[$key] = $value->value;
             } else {
                 $array[$key] = $value;
             }

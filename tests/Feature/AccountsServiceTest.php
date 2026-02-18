@@ -20,7 +20,12 @@ use TwoJays\NeonApiWrapper\DataObjects\IndividualToCompanyData;
 use TwoJays\NeonApiWrapper\DataObjects\LinkIndividualToCompanyData;
 use TwoJays\NeonApiWrapper\DataObjects\MembershipListResponseData;
 use TwoJays\NeonApiWrapper\DataObjects\OrderListResponseData;
+use TwoJays\NeonApiWrapper\DataObjects\OutputFieldsData;
 use TwoJays\NeonApiWrapper\DataObjects\PaginationData;
+use TwoJays\NeonApiWrapper\DataObjects\PaginationEventRegistrationData;
+use TwoJays\NeonApiWrapper\DataObjects\SearchFieldsData;
+use TwoJays\NeonApiWrapper\DataObjects\SearchRequestData;
+use TwoJays\NeonApiWrapper\DataObjects\SearchResponseData;
 use TwoJays\NeonApiWrapper\Enums\AccountSearchResultItemUserTypeEnum;
 use TwoJays\NeonApiWrapper\Exceptions\ForbiddenException;
 use TwoJays\NeonApiWrapper\Exceptions\NotFoundException;
@@ -253,6 +258,93 @@ it('deletes an account contact', function () {
 
     expect($response)
         ->toBeInstanceOf(AccountIdResultData::class);
+});
+
+it('updates an account', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountIdResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $data = DataGeneratorFactory::generate(AccountData::class);
+    $response = $this->service->updateAccount('123', $data);
+
+    expect($response)
+        ->toBeInstanceOf(AccountIdResultData::class);
+});
+
+it('patches an account', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountIdResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $data = DataGeneratorFactory::generate(AccountData::class);
+    $response = $this->service->patchAccount('123', $data);
+
+    expect($response)
+        ->toBeInstanceOf(AccountIdResultData::class);
+});
+
+it('searches accounts', function () {
+    $responseContent = DataGeneratorFactory::generate(SearchResponseData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $searchRequest = DataGeneratorFactory::generate(SearchRequestData::class);
+    $response = $this->service->searchAccounts($searchRequest);
+
+    expect($response)
+        ->toBeInstanceOf(SearchResponseData::class);
+});
+
+it('gets search output fields', function () {
+    $responseContent = DataGeneratorFactory::generate(OutputFieldsData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->getSearchOutputFields();
+
+    expect($response)
+        ->toBeInstanceOf(OutputFieldsData::class);
+});
+
+it('gets search fields', function () {
+    $responseContent = DataGeneratorFactory::generate(SearchFieldsData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->getSearchFields();
+
+    expect($response)
+        ->toBeInstanceOf(SearchFieldsData::class);
+});
+
+it('patches an account contact', function () {
+    $responseContent = DataGeneratorFactory::generate(AccountIdResultData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->patchContact('1', '12', DataGeneratorFactory::generate(ContactData::class));
+
+    expect($response)
+        ->toBeInstanceOf(AccountIdResultData::class);
+});
+
+it('gets event registrations for an account', function () {
+    $responseContent = DataGeneratorFactory::generate(PaginationEventRegistrationData::class)->toArray();
+
+    $this->mockHandler
+        ->append(new Response(200, [], Utils::streamFor(json_encode($responseContent))));
+
+    $response = $this->service->getAccountEventRegistrations('100');
+
+    expect($response)
+        ->toBeInstanceOf(PaginationEventRegistrationData::class);
 });
 
 it('links an individual account to a company account', function () {

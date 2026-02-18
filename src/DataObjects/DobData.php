@@ -7,8 +7,8 @@ use TwoJays\NeonApiWrapper\Data;
 class DobData extends Data
 {
     public function __construct(
-        public string $day,
-        public string $month,
-        public string $year
+        public ?string $day = null,
+        public ?string $month = null,
+        public ?string $year = null
     ) {}
 }

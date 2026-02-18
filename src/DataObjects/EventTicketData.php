@@ -7,15 +7,15 @@ use TwoJays\NeonApiWrapper\Data;
 class EventTicketData extends Data
 {
     public function __construct(
-        public int $id,
-        public string $name,
-        public string $description,
-        public float $fee,
-        public int $maxNumberAvailable,
-        public int $numberRemaining,
-        public string $attendeesPerTicketType,
-        public int $attendeesPerTicketNumber,
-        public CraInfoData $craInfo,
-        public TaxDeducibleInfoData $taxDeductibleInfo
+        public ?int $id = null,
+        public ?string $name = null,
+        public ?string $description = null,
+        public ?float $fee = null,
+        public ?int $maxNumberAvailable = null,
+        public ?int $numberRemaining = null,
+        public ?string $attendeesPerTicketType = null,
+        public ?int $attendeesPerTicketNumber = null,
+        public ?CraInfoData $craInfo = null,
+        public ?TaxDeducibleInfoData $taxDeductibleInfo = null
     ) {}
 }

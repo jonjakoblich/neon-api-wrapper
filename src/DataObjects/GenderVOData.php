@@ -7,9 +7,9 @@ use TwoJays\NeonApiWrapper\Data;
 class GenderVOData extends Data
 {
     public function __construct(
-        public string $code,
-        public string $description,
-        public string $status,
-        public int $position
+        public ?string $code = null,
+        public ?string $description = null,
+        public ?string $status = null,
+        public ?int $position = null
     ) {}
 }

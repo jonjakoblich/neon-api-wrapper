@@ -7,9 +7,9 @@ use TwoJays\NeonApiWrapper\Data;
 class TimestampsData extends Data
 {
     public function __construct(
-        public string $createdBy,
-        public string $createdDateTime,
-        public string $lastModifiedBy,
-        public string $lastModifiedDateTime
+        public ?string $createdBy = null,
+        public ?string $createdDateTime = null,
+        public ?string $lastModifiedBy = null,
+        public ?string $lastModifiedDateTime = null
     ) {}
 }

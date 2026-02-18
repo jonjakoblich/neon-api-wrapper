@@ -38,6 +38,17 @@ class AddressesService extends BaseService
         );
     }
 
+    public function patchAddress(
+        string $addressId,
+        DataObjects\AddressData $address,
+    ): DataObjects\EmptyData
+    {
+        return $this->getResponse(
+            new Requests\PatchAddressRequest(...func_get_args()),
+            DataObjects\EmptyData::class,
+        );
+    }
+
     public function createAddress(
         DataObjects\AddressAddData $address,
     ): DataObjects\AccountIdAndRefIdResultData

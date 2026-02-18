@@ -2,12 +2,14 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
+use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Data;
 
 class ProductSearchResponseData extends Data
 {
     public function __construct(
-        public array $products,
-        public PaginationData $pagination
+        #[ArrayOf(ProductData::class)]
+        public ?array $products = null,
+        public ?PaginationData $pagination = null
     ) {}
 }

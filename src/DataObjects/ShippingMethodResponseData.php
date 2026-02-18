@@ -7,8 +7,8 @@ use TwoJays\NeonApiWrapper\Data;
 class ShippingMethodResponseData extends Data
 {
     public function __construct(
-        public string $id,
-        public string $name,
-        public float $fee
+        public ?string $id = null,
+        public ?string $name = null,
+        public ?float $fee = null
     ) {}
 }

@@ -7,7 +7,7 @@ use TwoJays\NeonApiWrapper\Data;
 class NeonPaySettingData extends Data
 {
     public function __construct(
-        public string $merchantId,
-        public string $publicKey
+        public ?string $merchantId = null,
+        public ?string $publicKey = null
     ) {}
 }

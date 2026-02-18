@@ -7,7 +7,7 @@ use TwoJays\NeonApiWrapper\Data;
 class NameValuePairData extends Data
 {
     public function __construct(
-        public string $name,
-        public string $value
+        public ?string $name = null,
+        public ?string $value = null
     ) {}
 }

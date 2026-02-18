@@ -7,11 +7,11 @@ use TwoJays\NeonApiWrapper\Data;
 class ProductOptionItemData extends Data
 {
     public function __construct(
-        public string $id,
-        public float $priceAdjustment,
-        public float $advantageAmountAdjustment,
-        public float $nonDeductibleAmountAdjustment,
-        public string $name,
-        public string $status
+        public ?string $id = null,
+        public ?float $priceAdjustment = null,
+        public ?float $advantageAmountAdjustment = null,
+        public ?float $nonDeductibleAmountAdjustment = null,
+        public ?string $name = null,
+        public ?string $status = null
     ) {}
 }

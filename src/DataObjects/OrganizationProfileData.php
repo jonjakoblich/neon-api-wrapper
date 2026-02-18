@@ -7,8 +7,8 @@ use TwoJays\NeonApiWrapper\Data;
 class OrganizationProfileData extends Data
 {
     public function __construct(
-        public string $name,
-        public string $orgId,
-        public string $appUrl
+        public ?string $name = null,
+        public ?string $orgId = null,
+        public ?string $appUrl = null
     ) {}
 }

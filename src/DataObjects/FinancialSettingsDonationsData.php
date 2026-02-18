@@ -7,7 +7,7 @@ use TwoJays\NeonApiWrapper\Data;
 class FinancialSettingsDonationsData extends Data
 {
     public function __construct(
-        public string $type,
-        public string $label
+        public ?string $type = null,
+        public ?string $label = null
     ) {}
 }

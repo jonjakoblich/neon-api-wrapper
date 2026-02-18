@@ -7,9 +7,9 @@ use TwoJays\NeonApiWrapper\Data;
 class EventRegistrationResponseData extends Data
 {
     public function __construct(
-        public int $id,
-        public string $accountId,
-        public string $status,
-        public PaymentResponseData $paymentResponse
+        public ?int $id = null,
+        public ?string $accountId = null,
+        public ?string $status = null,
+        public ?PaymentResponseData $paymentResponse = null
     ) {}
 }

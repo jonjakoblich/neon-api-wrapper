@@ -2,33 +2,38 @@
 
 namespace TwoJays\NeonApiWrapper\DataObjects;
 
+use TwoJays\NeonApiWrapper\Attributes\ArrayOf;
 use TwoJays\NeonApiWrapper\Data;
 
 class ProductData extends Data
 {
     public function __construct(
-        public array $catalogs,
-        public string $id,
-        public CategoryData $category,
-        public string $name,
-        public string $code,
-        public string $status,
-        public string $keyword,
-        public string $description,
-        public float $unitPrice,
-        public string $downloadURL,
-        public bool $isApplyOnSiteTax,
-        public bool $isFrontEndDisplay,
-        public ProductShippingData $shipping,
-        public float $priceOffDiscount,
-        public bool $isDiscountInPercentage,
-        public bool $hasOptions,
-        public string $priceOffDiscountStartDate,
-        public string $priceOffDiscountEndDate,
-        public array $images,
-        public array $options,
-        public array $customFields,
-        public CraInfoData $craInfo,
-        public TaxDeducibleInfoData $taxDeductibleInfo
+        #[ArrayOf(CatalogData::class)]
+        public ?array $catalogs = null,
+        public ?string $id = null,
+        public ?CategoryData $category = null,
+        public ?string $name = null,
+        public ?string $code = null,
+        public ?string $status = null,
+        public ?string $keyword = null,
+        public ?string $description = null,
+        public ?float $unitPrice = null,
+        public ?string $downloadURL = null,
+        public ?bool $isApplyOnSiteTax = null,
+        public ?bool $isFrontEndDisplay = null,
+        public ?ProductShippingData $shipping = null,
+        public ?float $priceOffDiscount = null,
+        public ?bool $isDiscountInPercentage = null,
+        public ?bool $hasOptions = null,
+        public ?string $priceOffDiscountStartDate = null,
+        public ?string $priceOffDiscountEndDate = null,
+        #[ArrayOf(ProductImageData::class)]
+        public ?array $images = null,
+        #[ArrayOf(ProductOptionData::class)]
+        public ?array $options = null,
+        #[ArrayOf(CustomFieldData::class)]
+        public ?array $customFields = null,
+        public ?CraInfoData $craInfo = null,
+        public ?TaxDeducibleInfoData $taxDeductibleInfo = null
     ) {}
 }
